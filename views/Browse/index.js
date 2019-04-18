@@ -4,6 +4,8 @@ const NavbarTop = require('../../components/NavbarTop')
 const MobileNavMenuModal = require('../../components/NavbarTop/components/MobileNavMenuModal')
 const Footer = require('../../components/Footer')
 const AddFeatureBtn = require('../../components/AddFeatureBtn')
+const AddLinkModal = require('../../components/AddLinkModal')
+const AddListModal = require('../../components/AddListModal')
 
 var TITLE = 'nautilists - browse'
 
@@ -21,6 +23,8 @@ function view (state, emit) {
   ${Footer(state, emit)}
   ${MobileNavMenuModal(state, emit)}
   ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
+  ${AddLinkModal(state, emit)}
+  ${AddListModal(state, emit)}
 </body>
   `
 }

@@ -13,27 +13,29 @@ function store (state, emitter) {
             displayed:false
         },
         addListModal:{
-            displayed:false
+            displayed:true
         }
     }
 
     // Actions
     state.events.NAVMODAL_TOGGLE = 'NAVMODAL_TOGGLE';
     state.events.ADDFEATUREBTNPOPUP_TOGGLE = 'ADDFEATUREBTNPOPUP_TOGGLE';
+    state.events.ADDLINKMODAL_TOGGLE = 'ADDLINKMODAL_TOGGLE';
+    state.events.ADDLISTMODAL_TOGGLE = 'ADDLISTMODAL_TOGGLE';
     
     // Events
-    emitter.on('NAVMODAL_TOGGLE', () => {
-        state.modals.nav.displayed = !state.modals.nav.displayed
-        emitter.emit('render')
-    })
-
-    emitter.on('ADDFEATUREBTNPOPUP_TOGGLE', () => {
-        state.modals.addFeatureBtnPopup.displayed = !state.modals.addFeatureBtnPopup.displayed
-        emitter.emit('render')
-    })
+    emitter.on('NAVMODAL_TOGGLE', toggleDisplayed('nav'))
+    emitter.on('ADDFEATUREBTNPOPUP_TOGGLE', toggleDisplayed('addFeatureBtnPopup'))
+    emitter.on('ADDLINKMODAL_TOGGLE', toggleDisplayed('addLinkModal'))
+    emitter.on('ADDLISTMODAL_TOGGLE', toggleDisplayed('addListModal'))
 
     // Doers
-    
+    function toggleDisplayed(modalName){
+        return e=> {
+            state.modals[modalName].displayed = !state.modals[modalName].displayed
+            emitter.emit('render')
+        }
+    }
 
     
 

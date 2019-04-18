@@ -23,6 +23,10 @@ css`
     box-sizing:border-box;
 }
 
+textarea{
+    height:120px;
+}
+
 html{
   width:100%;
   height:100%;
@@ -38,6 +42,10 @@ module.exports = {
     main:`w-100 flex flex-column flex-grow-1`,
     footer:`w-100 flex flex-column flex-row-ns min-height-180px bg-near-white`,
     aTag:`link black pointer`,
-    modalContainer:`w-100 h-100 fixed top-0 left-0 bg-light-green max-z`,
-    sectionmw7:`w-100 h-100 mw7 pa2`
+    modalContainer:`w-100 h-100 fixed top-0 left-0 bg-light-green max-z flex flex-column`,
+    sectionmw7:`w-100 h-100 mw7 pa2`,
+    fieldset:`w-100 dropshadow ba bw1 b--black mt3 mb3 pa2 bg-white`,
+    modalInput:`w-100 bg-near-white f6 bn pa2`,
+    legend:`pl3 pr3`,
+    submitButton: `pa2 h3 bg-navy pink dropshadow grow w4`
 }

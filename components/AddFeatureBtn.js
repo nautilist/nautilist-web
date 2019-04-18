@@ -10,10 +10,19 @@ class AddFeatureBtn extends Component {
         popup: 'dn',
     }
     this.togglePopup = this.togglePopup.bind(this);
+    this.toggleListModal= this.toggleListModal.bind(this);
+    this.toggleLinkModal= this.toggleLinkModal.bind(this);
   }
   
+  toggleLinkModal(e){
+    this.emit('ADDLINKMODAL_TOGGLE')
+  }
+
+  toggleListModal(e){
+    this.emit('ADDLISTMODAL_TOGGLE')
+    }
+
   togglePopup(e){
-      console.log('clicked!')
     this.emit('ADDFEATUREBTNPOPUP_TOGGLE')
   }
   
@@ -24,11 +33,13 @@ class AddFeatureBtn extends Component {
           <ul class="list pl0 w4 tr dropshadow">
             <li>
               <button 
+                onclick=${this.toggleLinkModal}
                 class="button-reset w-100 tc grow ba bw1 bg-light-green b--white pa1"> <p class="w-100 h1"><img class="h1" src="/assets/1F517.png"> link</p>
               </button>
             </li>
             <li>
               <button 
+                onclick=${this.toggleListModal}
                 class="button-reset w-100 tc grow ba bw1 bg-yellow b--white pa1"> <p class="w-100 h1"><img class="h1" src="/assets/1F4A5.png"> list</p>
               </button>
             </li>

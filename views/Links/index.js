@@ -1,6 +1,7 @@
 var html = require('choo/html')
 const styles = require('../../styles')
 const Footer = require('../../components/Footer')
+const AddFeatureBtn = require('../../components/AddFeatureBtn')
 var TITLE = 'nautilists - browse'
 
 module.exports = view
@@ -10,7 +11,7 @@ function view (state, emit) {
 
   return html`
     <body class="${styles.body}">
-      
+      ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
     </body>
   `
 }

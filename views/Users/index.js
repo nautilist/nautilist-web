@@ -3,6 +3,7 @@ const styles = require('../../styles')
 const NavbarTop = require('../../components/NavbarTop')
 const MobileNavMenuModal = require('../../components/NavbarTop/components/MobileNavMenuModal')
 const Footer = require('../../components/Footer')
+const AddFeatureBtn = require('../../components/AddFeatureBtn')
 
 
 var TITLE = 'nautilists - user'
@@ -35,6 +36,7 @@ function UsersPage(state, emit){
             </main>
             ${Footer(state, emit)}
             ${MobileNavMenuModal(state, emit)}
+            ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
         </body>
     `
 }
@@ -49,7 +51,7 @@ function UserPage(state, emit){
             </main>
             ${Footer(state, emit)}
             ${MobileNavMenuModal(state, emit)}
+            ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
         </body>
     `
 }
-
