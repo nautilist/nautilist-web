@@ -26,10 +26,11 @@ function ModalMain(state, emit){
     return html`
     <div class="w-100 h-auto outline flex flex-row-ns flex-column flex-grow-1">
         <section class="w-third-ns w-100 h-100 outline pa2">
-            <div class="w-100 h-100 outline">
+            <div class="w-100 h-100 outline overflow-y-scroll">
+                ${linkSelectionList(state, emit)}
             </div>
         </section>
-        <section class="w-two-thirds-ns w-100 h-100 outline pa2">
+        <section class="w-two-thirds-ns w-100 h-100 outline pa2 pl4 pr4">
             <div class="w-100 h-100">
                 ${AddListForm()}
             </div>
@@ -81,6 +82,32 @@ function inputSubmit(){
         <div class="w-100 mt4 flex flex-row justify-end">
             <input class="${styles.submitButton}" type="submit" value="Submit">
         </div>
+    `
+}
+
+function linkSelectionList(state, emit){
+    const {links} = state.main
+
+    return html`
+    <ul class="w-100 h-100 list ma0 pt0 pb3 pl3 pr3">
+        ${LinkList(links.data)}
+    </ul>
+    `
+}
+
+function LinkList(links){
+    return links.map(link => {
+        return linkSelectCard(link)
+    })
+}
+
+function linkSelectCard(link){
+    const {name, description, _id} = link;
+    return html`
+    <li class="h3 w-100 pa0 ma0 f7 mt2 mb2 outline dropshadow" data-id=${_id}>
+        <p class="ma0 f7">${name}</p>
+        <p class="ma0 f7 truncate">${description}</p>
+    </li>
     `
 }
 

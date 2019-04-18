@@ -19,6 +19,7 @@ class AddFeatureBtn extends Component {
   }
 
   toggleListModal(e){
+    this.emit('LINKS_FIND', {query:{$sort:{'createdAt':-1}}})
     this.emit('ADDLISTMODAL_TOGGLE')
     }
 

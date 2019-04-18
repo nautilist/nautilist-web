@@ -10,10 +10,17 @@ function store (state, emitter) {
             displayed:false
         },
         addLinkModal:{
-            displayed:false
+            displayed:false,
+            name:null,
+            description:null,
+            tags:[]
         },
         addListModal:{
-            displayed:true
+            displayed:true,
+            name:null,
+            description:null,
+            tags:[],
+            links:[]
         }
     }
 

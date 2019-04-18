@@ -15,6 +15,7 @@ function store (state, emitter) {
             state.api[this.db].find(myQuery)
                 .then(result => {
                     state.main[this.db] = result;
+                    emitter.emit('render')
                     return result;
                 }).catch(err => {
                     alert(err);
@@ -52,8 +53,12 @@ function store (state, emitter) {
     delete usersApi.create
 
 state.main = {
-      links: {},
-      lists: {},
+      links: {
+        data:[]
+      },
+      lists: {
+        data:[]
+      },
       users: {},
       selected:{
           links:{},
