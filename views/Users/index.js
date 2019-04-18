@@ -2,6 +2,8 @@ var html = require('choo/html')
 const styles = require('../../styles')
 const NavbarTop = require('../../components/NavbarTop')
 const MobileNavMenuModal = require('../../components/NavbarTop/components/MobileNavMenuModal')
+const Footer = require('../../components/Footer')
+
 
 var TITLE = 'nautilists - user'
 
@@ -27,12 +29,13 @@ function UsersPage(state, emit){
 
     return html`
     <body class="${styles.body}">
-        ${NavbarTop(state, emit)}
-        <main class="${styles.main}">
-            
-        </main>
-        <footer class=${styles.footer}>footer</footer>
-    </body>
+            ${NavbarTop(state, emit)}
+            <main class="${styles.main}">
+                
+            </main>
+            ${Footer(state, emit)}
+            ${MobileNavMenuModal(state, emit)}
+        </body>
     `
 }
 
@@ -42,12 +45,9 @@ function UserPage(state, emit){
         <body class="${styles.body}">
             ${NavbarTop(state, emit)}
             <main class="${styles.main}">
-                <div class="outline h4 bg-moon-gray mt2 mb2"></div>
-                <div class="outline h4 bg-moon-gray mt2 mb2"></div>
-                <div class="outline h4 bg-moon-gray mt2 mb2"></div>
-                <div class="outline h4 bg-moon-gray mt2 mb2"></div>
+                
             </main>
-            <footer class=${styles.footer}>footer</footer>
+            ${Footer(state, emit)}
             ${MobileNavMenuModal(state, emit)}
         </body>
     `

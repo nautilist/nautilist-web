@@ -1,5 +1,6 @@
 var html = require('choo/html')
 const styles = require('../../styles')
+const Footer = require('../../components/Footer')
 var TITLE = 'nautilists - browse'
 
 module.exports = view

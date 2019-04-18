@@ -1,6 +1,5 @@
 const html = require('choo/html');
 const styles = require('../../../styles');
-console.log(styles)
 module.exports = AuthBtn
 
 function AuthBtn(state, emit){
@@ -17,7 +16,7 @@ function AuthBtn(state, emit){
 
 function logoutBtn(state, emit){
     return html`
-        <button class="pointer" onclick=${()=> emit('USER_LOGOUT')}>log out</button>
+        <button class="pointer bn bg-transparent" onclick=${()=> emit('USER_LOGOUT')}>log out</button>
     `
 }
 
@@ -26,7 +25,7 @@ function isAuthd(state, emit){
     const {username} = user;
     return html`
         <div>
-            <p>Hello <a class="${styles.aTag}">${username}</a> · ${logoutBtn(state,emit)}</p>
+            <p>Hello <a class="${styles.aTag} b underline">${username}</a> · ${logoutBtn(state,emit)}</p>
         </div>
     `
 }

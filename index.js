@@ -11,14 +11,20 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // app.use(require('./stores/clicks'))
+app.use(require('./stores/api'))
+app.use(require('./stores/main'))
 app.use(require('./stores/user'))
 app.use(require('./stores/modals'))
 
 app.route('/', require('./views/Home'))
 app.route('/login', require('./views/Auth'))
 app.route('/verify', require('./views/Auth'))
+app.route('/verifyRedirect', require('./views/Auth'))
 app.route('/reset', require('./views/Auth'))
 app.route('/signup', require('./views/Auth'))
+
+
+app.route('/browse', require('./views/Browse'))
 
 app.route('/users', require('./views/Users'))
 app.route('/users/:username', require('./views/Users'))
