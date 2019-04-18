@@ -1,26 +1,39 @@
 const html = require('choo/html')
 const styles = require('../../styles');
+const AuthBtn = require('./components/AuthBtn')
+const LogoMain = require('./components/LogoMain')
+const MobileNav = require('./components/MobileNav')
+const SearchInput = require('./components/SearchInput')
+const BrowseBtn = require('./components/BrowseBtn')
 
 module.exports = NavbarTop
 
-let navLeft = `f7 flex flex-row list pa0 pa2 ma0 w-two-thirds-ns w-100 items-center`
-let navRight = `f7 flex flex-row justify-end items-center list pa0 pa2 ma0 w-third-ns w-100`
+let styles_navLeft = `dn f7 flex-ns flex-row list pa0 pa2 ma0 w-two-thirds-ns w-100 items-center`
+let styles_navRight = `dn f7 flex-ns flex-row justify-end items-center list pa0 pa2 ma0 w-third-ns w-100`
+let styles_logoContainer = `dn w3 flex-ns flex-column items-left justify-center`
+let styles_searchContainer = `dn h-100 w-100 flex-ns`
+
+
 function NavbarTop(state, emit){
     return html`
     <nav class="${styles.navbarTop}">
-        <ul class="${navLeft}">
-            <li class="w3 flex flex-column items-left justify-center">
-                <img class="w-100" src="/assets/logo-n.png">
-            </li>
-            <li class="flex-grow-1 flex flex-row pl3 mw6 h-100">
-                <div class="dropshadow f3 pa1 bl bt bb bg-white bw1 b--dark-pink">🔎</div>
-                <input type="search" placeholder="search" class="h-100 dropshadow pl2 ba bw1 bg-white f6  b--dark-pink w-100 h-100">
-            </li>
-            <li class="pl3">browse</li>
-        </ul>
-        <ul class="${navRight}">
-            <li>login | sign up</li>
-        </ul>
+            <ul class="${styles_navLeft}">
+                <li class="${styles_logoContainer}">
+                    ${LogoMain()}
+                </li>
+                <li class="${styles_searchContainer}">
+                    ${SearchInput()}
+                </li>
+                <li class="pl3">
+                    ${BrowseBtn()}
+                </li>
+            </ul>
+            <ul class="${styles_navRight}">
+                <li>${AuthBtn(state, emit)}</li>
+            </ul>
+            <!-- mobile -->
+            ${MobileNav(state, emit)}
     </nav>
     `
 }
+

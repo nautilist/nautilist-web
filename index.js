@@ -10,9 +10,16 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(require('choo-service-worker')())
 }
 
-app.use(require('./stores/clicks'))
+// app.use(require('./stores/clicks'))
+app.use(require('./stores/user'))
+app.use(require('./stores/modals'))
 
 app.route('/', require('./views/Home'))
+app.route('/login', require('./views/Auth'))
+app.route('/verify', require('./views/Auth'))
+app.route('/reset', require('./views/Auth'))
+app.route('/signup', require('./views/Auth'))
+
 app.route('/users', require('./views/Users'))
 app.route('/users/:username', require('./views/Users'))
 

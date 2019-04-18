@@ -3,7 +3,7 @@ module.exports = store
 function store (state, emitter) {
   
     state.user = {
-        authenticated: null,
+        authenticated: false,
         _id: null,
         username: null,
         bio: null,
