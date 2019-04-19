@@ -4,7 +4,7 @@ const styles = require('../../styles')
 function AddListModal(state, emit){
     if(state.modals.addListModal.displayed === true){
         return html`
-        <div class="${styles.modalContainer}" style="background:rgba(232, 253, 245, 0.95)">
+        <div class="${styles.modalContainer}" style="background:rgba(232, 253, 245, 1)">
             ${ModalHeader(state, emit)}
             ${ModalMain(state, emit)}
         </div>
@@ -24,55 +24,56 @@ function ModalHeader(state, emit){
 
 function ModalMain(state, emit){
     return html`
-    <div class="w-100 h-auto outline flex flex-row-ns flex-column flex-grow-1">
-        <section class="w-third-ns w-100 h-100 outline pa2">
-            <div class="w-100 h-100 outline overflow-y-scroll">
+    <div class="w-100 h-100 bt bw1 b--black flex flex-row-ns flex-column-reverse overflow-y-scroll">
+        <section class="w-third-ns w-100 h-auto pa2-ns pa4">
+            <fieldset class="${styles.fieldset} mw0">
+                <legend class="${styles.legend}">Optional: Select Links</legend>
                 ${linkSelectionList(state, emit)}
-            </div>
+            </fieldset>
         </section>
-        <section class="w-two-thirds-ns w-100 h-100 outline pa2 pl4 pr4">
+        <section class="w-two-thirds-ns w-100 h-auto pa2 pl4 pr4">
             <div class="w-100 h-100">
-                ${AddListForm()}
+                ${AddListForm(state, emit)}
             </div>
         </section>
     </div>
     `
 }
 
-function AddListForm(){
+function AddListForm(state, emit){
     return html`
-        <form>
-            ${inputName()}
-            ${inputDescription()}
-            ${inputTags()}
-            ${inputSubmit()}
+        <form id="AddListForm" onsubmit=${handleSubmit(state, emit)}>
+            ${inputName(state, emit)}
+            ${inputDescription(state, emit)}
+            ${inputTags(state, emit)}
+            ${inputSubmit(state, emit)}
         </form>
     `
 }
 
-function inputName(){
+function inputName(state, emit){
     return html`
         <fieldset class="${styles.fieldset}">
             <legend class="${styles.legend}">Name</legend>
-            <input class="${styles.modalInput}" type="text" placeholder="Magical List Name">
+            <input value="${state.modals.addListModal.name}" onkeyup=${handleKeyUp(state,emit)} name="name" class="${styles.modalInput}" type="text" placeholder="Magical List Name">
         </fieldset>
     `
 }
 
-function inputDescription(){
+function inputDescription(state, emit){
     return html`
         <fieldset class="${styles.fieldset}">
             <legend class="${styles.legend}">Description</legend>
-            <textarea class="${styles.modalInput}" placeholder="A description to go with the magic"></textarea>
+            <textarea onkeyup=${handleKeyUp(state,emit)} name="description" class="${styles.modalInput}" placeholder="A description to go with the magic">${state.modals.addListModal.description}</textarea>
         </fieldset>
     `
 }
 
-function inputTags(){
+function inputTags(state, emit){
     return html`
         <fieldset class="${styles.fieldset}">
             <legend class="${styles.legend}">Tags</legend>
-            <input class="${styles.modalInput}" type="text" placeholder="creative, coding, javascript">
+            <input value="${state.modals.addListModal.tags}" onkeyup=${handleKeyUp(state,emit)} name="tags" class="${styles.modalInput}" type="text" placeholder="creative, coding, javascript">
         </fieldset>
     `
 }
@@ -85,31 +86,56 @@ function inputSubmit(){
     `
 }
 
+function handleSubmit(state, emit){
+    return e => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget)
+        emit('ADDLISTMODAL_SUBMIT', formData)
+    }
+}
+
+function handleKeyUp(state, emit){
+    return e => {
+        const val = e.target.value;
+        const prop = e.target.name;
+        emit('modal_handle_keyup', {modalName:'addListModal', prop:prop, val:val})
+    }
+}
+
 function linkSelectionList(state, emit){
     const {links} = state.main
 
     return html`
-    <ul class="w-100 h-100 list ma0 pt0 pb3 pl3 pr3">
-        ${LinkList(links.data)}
+    <ul class="w-100 vh-50-ns h3 flex flex-column overflow-y-scroll list ma0 pt2 pb3 pl3 pr3">
+        ${LinkList(links.data, state, emit)}
     </ul>
     `
 }
 
-function LinkList(links){
+function LinkList(links, state, emit){
     return links.map(link => {
-        return linkSelectCard(link)
+        return linkSelectCard(link, state, emit)
     })
 }
 
-function linkSelectCard(link){
+function linkSelectCard(link, state, emit){
     const {name, description, _id} = link;
+    const {modals} = state;
+
+    const selected = modals.addListModal.links.includes(_id) ? 'bg-light-green' : 'bg-white'
+
     return html`
-    <li class="h3 w-100 pa0 ma0 f7 mt2 mb2 outline dropshadow" data-id=${_id}>
-        <p class="ma0 f7">${name}</p>
-        <p class="ma0 f7 truncate">${description}</p>
+    <li onclick=${toggleLinkSelect(_id, state, emit)} class="${selected} grow h3 w-100 pa1 ma0 f7 mt2 mb2 bg-white outline dropshadow" data-id=${_id}>
+        <p class="ma0 pa0 f7 truncate b">${name}</p>
+        <p class="ma0 pa0 f7 truncate">${description}</p>
     </li>
     `
 }
 
+function toggleLinkSelect(id, state, emit){
+    return e => {
+        emit('ADDLISTMODAL_LINKSELECT_TOGGLE', id);
+    }
+}
 
 module.exports = AddListModal

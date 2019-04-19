@@ -27,6 +27,10 @@ textarea{
     height:120px;
 }
 
+.mw0{
+    min-width:0;
+}
+
 html{
   width:100%;
   height:100%;
@@ -47,5 +51,5 @@ module.exports = {
     fieldset:`w-100 dropshadow ba bw1 b--black mt3 mb3 pa2 bg-white`,
     modalInput:`w-100 bg-near-white f6 bn pa2`,
     legend:`pl3 pr3`,
-    submitButton: `pa2 h3 bg-navy pink dropshadow grow w4`
+    submitButton: `pa2 ba bw1 b--black h3 bg-navy pink dropshadow grow w4`
 }
