@@ -16,7 +16,7 @@ function AddListModal(state, emit){
 function ModalHeader(state, emit){
     return html`
     <header class="flex flex-row items-center justify-between w-100">
-        <h2 class="ma0 pa0 pl2">Add List</h2>
+        <h2 class="ma0 pa0 pl2">Create List</h2>
         <button class="bn bg-navy pink bw2 pa2 h3 w3 f3 pointer" onclick=${() => emit('ADDLISTMODAL_TOGGLE')}>╳</button>
     </header>
     `
@@ -24,17 +24,19 @@ function ModalHeader(state, emit){
 
 function ModalMain(state, emit){
     return html`
-    <div class="w-100 h-100 bt bw1 b--black flex flex-row-ns flex-column-reverse overflow-y-scroll">
-        <section class="w-third-ns w-100 h-auto pa2-ns pa4">
+    <div class="w-100 h-100 bt bw1 b--black flex flex-row-ns flex-column overflow-y-scroll">
+        
+        <section class="w-50-ns w-100 h-auto pa2 pl4 pr4">
+            <div class="w-100 h-100">
+                ${AddListForm(state, emit)}
+            </div>
+        </section>
+
+        <section class="w-50-ns w-100 h-auto pa2 pl4 pr4">
             <fieldset class="${styles.fieldset} mw0">
                 <legend class="${styles.legend}">Optional: Select Links</legend>
                 ${linkSelectionList(state, emit)}
             </fieldset>
-        </section>
-        <section class="w-two-thirds-ns w-100 h-auto pa2 pl4 pr4">
-            <div class="w-100 h-100">
-                ${AddListForm(state, emit)}
-            </div>
         </section>
     </div>
     `
