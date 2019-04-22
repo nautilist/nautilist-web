@@ -26,17 +26,17 @@ function ModalMain(state, emit){
     return html`
     <div class="w-100 h-100 bt bw1 b--black flex flex-row-ns flex-column overflow-y-scroll">
         
-        <section class="w-50-ns w-100 h-auto pa2 pl4 pr4">
-            <div class="w-100 h-100">
-                ${AddListForm(state, emit)}
-            </div>
-        </section>
-
-        <section class="w-50-ns w-100 h-auto pa2 pl4 pr4">
+        <section class="w-50-ns w-100 h-auto pa2 pl4 pr4 bw1 br">
             <fieldset class="${styles.fieldset} mw0">
                 <legend class="${styles.legend}">Optional: Select Links</legend>
                 ${linkSelectionList(state, emit)}
             </fieldset>
+        </section>
+
+        <section class="w-50-ns w-100 h-auto pa2 pl4 pr4">
+            <div class="w-100 h-100">
+                ${AddListForm(state, emit)}
+            </div>
         </section>
     </div>
     `
