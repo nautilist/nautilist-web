@@ -4,7 +4,12 @@ const styles = require('../../../styles')
 module.exports = BrowseBtn;
 
 function BrowseBtn(state, emit){
+   
+    function handleClick(e){
+        emit('BROWSE_FIND');
+        emit('pushState', '/browse')
+    }
     return html`
-    <a class="${styles.aTag}" href="/browse">browse</a>
+    <button class="bn bg-transparent pointer" onclick=${handleClick}>browse</button>
     `
 }

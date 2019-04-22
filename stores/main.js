@@ -24,7 +24,7 @@ function store (state, emitter) {
 
         get(query){
             const myQuery = query ? query : {};
-            console.log(myQuery)
+            // console.log(myQuery)
             state.api[this.db].get(myQuery)
                 .then(result => {
                     state.main.selected[this.db] = result;
