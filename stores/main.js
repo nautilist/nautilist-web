@@ -59,7 +59,9 @@ state.main = {
       lists: {
         data:[]
       },
-      users: {},
+      users: {
+          data:[]
+      },
       selected:{
           links:{},
           lists:{},
@@ -89,6 +91,10 @@ state.main = {
   state.events.USERS_REMOVE = "USERS_REMOVE";
   state.events.USERS_PATCH = "USERS_PATCH";
 
+  // BROWSE
+  state.events.BROWSE_FIND = "BROWSE_FIND";
+  
+
 //   state.api.socket.on('get', message => console.log('getting this: ',message))
 //   state.api.socket.emit('get', 'api/lists', 'HtIOvI-Ic', (error, message) => {
 //       if(error) console.log('Found message', message);
@@ -112,6 +118,13 @@ state.main = {
 
     emitter.on('USERS_FIND', usersApi.find)
     emitter.on('USERS_GET', usersApi.get)
+
+    emitter.on('BROWSE_FIND', () => {
+        const query = {query:{$sort:{'createdAt':-1}, $limit:16}}
+        emitter.emit('LISTS_FIND', query)
+        emitter.emit('LINKS_FIND', query)
+        emitter.emit('USERS_FIND', query)
+    })
   })
 
   
