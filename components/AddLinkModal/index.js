@@ -134,12 +134,42 @@ function handleKeyUp(state, emit){
     }
 }
 
+function fetchListsByUsername(state, emit){
+    return e =>{
+    emit('LISTS_FIND', {
+        query: {
+            $or: [
+                {owner: state.user._id},
+                {collaborators: {
+                    $in: [state.user._id]
+                    }
+                },
+            ]
+        }
+    })
+}
+}
+
 function listSelectionList(state, emit){
     const {lists} = state.main
 
+    let data = lists.data.slice(0,);
+    if(state.user.authenticated){
+        data = data.filter(item => item.ownerDetails.username === state.user.username)
+    } else {
+        data = []
+    }
+
+    
+    if(data.length === 0){
+        return html`
+        <p>No lists found - either you need to <a class="${styles.aTag} underline" href="/login">log in</a> in or you can try to <button class="bn dropshadow bg-near-white" onclick=${fetchListsByUsername(state, emit)}>retrieve my lists</button></p>
+        `
+    }
+
     return html`
     <ul class="w-100 vh-50-ns h3 flex flex-column overflow-y-scroll list ma0 pt2 pb3 pl3 pr3">
-        ${UserLists(lists.data, state, emit)}
+        ${UserLists(data, state, emit)}
     </ul>
     `
 }
@@ -182,7 +212,7 @@ function sectionSelectCard(section, state, emit){
 
 
 function listSelectCard(list, state, emit){
-    const {name, description, _id} = list;
+    const {name, description, _id, ownerDetails} = list;
     const {modals} = state;
 
     const selected = modals.addLinkModal.selectedList._id === _id ? 'bg-yellow' : 'bg-white'
@@ -190,6 +220,7 @@ function listSelectCard(list, state, emit){
     return html`
     <li onclick=${toggleListSelect(_id, state, emit)} class="${selected} grow h3 w-100 pa1 ma0 f7 mt2 mb2 bg-white outline dropshadow" data-id=${_id}>
         <p class="ma0 pa0 f7 truncate b">${name}</p>
+        <p class="ma0 pa0 f8 truncate b">by ${ownerDetails.username}</p>
         <p class="ma0 pa0 f7 truncate">${description}</p>
     </li>
     `

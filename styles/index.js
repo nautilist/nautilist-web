@@ -37,6 +37,10 @@ html{
   margin:0 auto;
 }
 
+.f8{
+    font-size:8px;
+}
+
 `
 
 
