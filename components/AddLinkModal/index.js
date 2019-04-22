@@ -153,7 +153,7 @@ function sectionSelectionList(state, emit){
     }
 
     return html`
-    <ul class="w-100 vh-50-ns h3 flex flex-column overflow-y-scroll list ma0 pt2 pb3 pl3 pr3">
+    <ul class="w-100 h4-ns h3 flex flex-column overflow-y-scroll list ma0 pt2 pb3 pl3 pr3">
         ${listSections(selectedList.sections, state, emit)}
     </ul>
     `
