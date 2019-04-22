@@ -7,6 +7,8 @@ const AddFeatureBtn = require('../../components/AddFeatureBtn')
 const AddLinkModal = require('../../components/AddLinkModal')
 const AddListModal = require('../../components/AddListModal')
 
+const BrowseCategoriesSection = require('./components/BrowseCategoriesSection')
+
 var TITLE = 'nautilists - browse'
 
 module.exports = view
@@ -18,7 +20,7 @@ function view (state, emit) {
   <body class="${styles.body}">
   ${NavbarTop(state, emit)}
   <main class="${styles.main}">
-      
+      ${BrowseCategoriesSection(state, emit)}
   </main>
   ${Footer(state, emit)}
   ${MobileNavMenuModal(state, emit)}
