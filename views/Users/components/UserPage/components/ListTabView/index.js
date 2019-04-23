@@ -12,7 +12,7 @@ function view(state, emit){
     }
     
     return html`
-    <section class="${styles.sectionmw7} pa2 bn bg-washed-red dropshadow mt3 mb5">
+    <section class="${styles.sectionmw7} pa2 bn bg-light-green dropshadow mt3 mb5">
         ${ListHeaderRow(state, emit)}
         <ul class="list pl0">
             ${ListCards(lists.data, state, emit)}
@@ -44,7 +44,7 @@ function formatTime(ts){
 function ListCard(list, state, emit){
     const {name, description, ownerDetails, updatedAt} = list;
     return html`
-    <li class="w-100 ba bw1 mt2 mb2 pa3-ns pa2 bg-white dropshadow flex flex-column flex-row-ns justify-between-ns">
+    <li class="w-100 ba bw1 mt2 mb2 pa3-ns pa2 bg-washed-green dropshadow flex flex-column flex-row-ns justify-between-ns">
         <div class="w-75-ns w-100">
         <h2 class="pa0 ma0 f4 f5-ns">${name}</h2>
         <p class="pa0 ma0 f7 f6-ns">${description}</p>
