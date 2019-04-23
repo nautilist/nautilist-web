@@ -112,6 +112,7 @@ state.main = {
   state.events.USERS_GET = "USERS_GET";
   state.events.USERS_REMOVE = "USERS_REMOVE";
   state.events.USERS_PATCH = "USERS_PATCH";
+  state.events.USERS_SET_SELECTED = "USERS_SET_SELECTED";
 
   // BROWSE
   state.events.BROWSE_FIND = "BROWSE_FIND";
@@ -143,6 +144,30 @@ state.main = {
     emitter.on('USERS_FIND', usersApi.find)
     emitter.on('USERS_FIND_MORE', usersApi.findMore);
     emitter.on('USERS_GET', usersApi.get)
+    emitter.on('USERS_SET_SELECTED', (username) => {
+        let userid;
+        let query;
+
+        state.api.users.find({query:{username: username}})
+            .then(result => {
+                console.log(result)
+                userid = result.data[0]._id;
+                state.main.selected.user.profile = result.data[0];
+                query = setQueryUserid(userid);
+                return state.api.lists.find(query)
+            }).then(result => {
+                state.main.selected.user.lists = result;
+                return state.api.links.find(query)
+            }).then(result => {
+                state.main.selected.user.links = result;
+                emitter.emit('render');
+            }).catch(err => {
+                console.log(err);
+                return err;
+            })
+        
+    })
+
 
     emitter.on('BROWSE_FIND', () => {
         const query = {query:{$sort:{'createdAt':-1}, $limit:16}}
@@ -151,6 +176,20 @@ state.main = {
         emitter.emit('USERS_FIND', query)
     })
   })
+
+
+  function setQueryUserid(userid){
+      return {
+        query:{
+            $sort:{'createdAt':-1}, 
+            $or:[
+                {owner: userid},
+                {collaborator: {
+                    $in: [userid]
+                }}
+            ]
+        }};
+  }
 
   
 }

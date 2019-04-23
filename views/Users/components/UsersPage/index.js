@@ -40,7 +40,7 @@ function showUsers(state, emit){
       cards = html`<p class="w-100 tc">no users yet</p>`
     }
     else {
-      cards = UserCards(users.data);
+      cards = UserCards(users.data, state, emit);
     }
     
   

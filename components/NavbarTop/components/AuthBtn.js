@@ -23,9 +23,15 @@ function logoutBtn(state, emit){
 function isAuthd(state, emit){
     const {user} = state;
     const {username} = user;
+
+    function navigateTo(e){
+        emit('USERS_SET_SELECTED', username)
+        emit('pushState', `/users/${username}`)
+    }
+
     return html`
         <div>
-            <p>Hello <a href="/users/${username}" class="${styles.aTag} b underline">${username}</a> · ${logoutBtn(state,emit)}</p>
+            <p>Hello <button onclick=${navigateTo} class="bn bg-transparent b underline">${username}</button> · ${logoutBtn(state,emit)}</p>
         </div>
     `
 }
