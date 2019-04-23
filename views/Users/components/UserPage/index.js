@@ -88,7 +88,20 @@ function UserTabSelect(state, emit){
 
     function highlightTab(tabName){
         if(state.userPage.selectedTab === tabName){
-            return 'bg-pink navy'
+            switch(tabName){
+                case 'lists':
+                    return 'bg-light-green navy'
+                    break
+                case 'links':
+                    return 'bg-light-pink navy'
+                    break
+                case 'listsFollowing':
+                    return 'bg-light-blue navy'
+                    break
+                default:
+                    return 'bg-pink navy'
+            }
+            
         } else {
             return 'bg-near-white navy'
         }
@@ -101,7 +114,7 @@ function UserTabSelect(state, emit){
                 <li class="pa0 mr2"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('links')}" onclick=${switchTab('links')}>links</button></li>
             </ul>
             <ul class="list pa0 pl0 flex flex-row ma0">
-            <li class="pa0 ml2"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('listsFollowing')}" onclick=${switchTab('listsFollowing')}>lists I follow</button></li>
+            <li class="pa0 ml2-ns ml0 mt2 mt0-ns"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('listsFollowing')}" onclick=${switchTab('listsFollowing')}>lists I follow</button></li>
             </ul>
         </section>
     `
