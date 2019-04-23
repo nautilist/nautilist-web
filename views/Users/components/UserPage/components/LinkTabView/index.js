@@ -12,7 +12,7 @@ function view(state, emit){
     }
     
     return html`
-    <section class="${styles.sectionmw7} pa2 bn bg-light-pink dropshadow mt3 mb5">
+    <section class="${styles.sectionmw7} pa2 bn bg-white mt3 mb5">
         ${LinkHeaderRow(state, emit)}
         <ul class="list pl0">
             ${LinkCards(links.data, state, emit)}
