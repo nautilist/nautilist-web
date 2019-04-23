@@ -1,17 +1,24 @@
 var html = require('choo/html')
-const styles = require('../../styles')
-const Footer = require('../../components/Footer')
-const AddFeatureBtn = require('../../components/AddFeatureBtn')
-var TITLE = 'nautilists - browse'
+const LinksPage = require('./components/LinksPage');
+const LinkPage = require('./components/LinkPage');
+
+var TITLE = 'nautilists - links'
 
 module.exports = view
 
 function view (state, emit) {
-  if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
+  if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE);
 
-  return html`
-    <body class="${styles.body}">
-      ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
-    </body>
-  `
+  switch(state.route){
+    case 'links':
+        return LinksPage(state, emit);
+        break;
+    case 'links/:_id':
+        return LinkPage(state, emit);
+        break;
+    default:
+        return html`<body>nothing found</body>`
+  }
 }
+
+

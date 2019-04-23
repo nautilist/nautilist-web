@@ -29,6 +29,9 @@ app.route('/browse', require('./views/Browse'))
 app.route('/users', require('./views/Users'))
 app.route('/users/:username', require('./views/Users'))
 
+app.route('/links', require('./views/Links'))
+app.route('/links/:id', require('./views/Links'))
+
 app.route('/lists', require('./views/Lists'))
 app.route('/lists/:id', require('./views/Lists'))
 

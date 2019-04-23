@@ -72,6 +72,8 @@ function store(state, emitter) {
     function toggleDisplayed(modalName) {
         return e => {
             state.modals[modalName].displayed = !state.modals[modalName].displayed
+            clearAddListModal()
+            clearAddLinkModal();
             emitter.emit('render')
         }
     }

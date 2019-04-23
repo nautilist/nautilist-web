@@ -5,6 +5,9 @@ const Footer = require('../../components/Footer')
 const MobileNavMenuModal = require('../../components/NavbarTop/components/MobileNavMenuModal')
 const AddFeatureBtn = require('../../components/AddFeatureBtn')
 
+const ListsPage = require('./components/ListsPage')
+const ListPage = require('./components/ListPage')
+
 var TITLE = 'nautilists - lists'
 
 module.exports = view
@@ -16,41 +19,11 @@ function view (state, emit) {
       case 'lists':
           return ListsPage(state, emit);
           break;
-      case 'lists/:username':
+      case 'lists/:_id':
           return ListPage(state, emit);
           break;
       default:
           return html`<body>nothing found</body>`
     }
-  }
-  
-  
-  function ListsPage(state, emit){
-  
-      return html`
-        <body class="${styles.body}">
-            ${NavbarTop(state, emit)}
-            <main class="${styles.main}">
-                
-            </main>
-            ${Footer(state, emit)}
-            ${MobileNavMenuModal(state, emit)}
-        </body>
-      `
-  }
-  
-  function ListPage(state, emit){
-      
-      return html`
-      <body class="${styles.body}">
-      ${NavbarTop(state, emit)}
-      <main class="${styles.main}">
-          
-      </main>
-      ${Footer(state, emit)}
-      ${MobileNavMenuModal(state, emit)}
-      ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
-  </body>
-      `
   }
   
