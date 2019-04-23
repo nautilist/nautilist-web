@@ -42,9 +42,15 @@ function formatTime(ts){
 }
 
 function LinkCard(link, state, emit){
-    const {name, description, ownerDetails, updatedAt, url} = link;
+    const {_id,name, description, ownerDetails, updatedAt, url} = link;
+
+    function navigateTo(e){
+        emit('pushState',`/links/${_id}`)
+    }
+
     return html`
-    <li class="w-100 ba bw1 mt2 mb2 pa3-ns pa2 bg-washed-red dropshadow flex flex-column flex-row-ns justify-between-ns">
+    <li onclick=${navigateTo}
+        class="w-100 ba bw1 mt2 mb2 pa3-ns pa2 bg-washed-red dropshadow flex flex-column flex-row-ns justify-between-ns pointer">
         <div class="w-75-ns w-100">
         <small class="f8 ma0 pa0">${url}</small>
         <h2 class="pa0 ma0 f4 f5-ns">${name}</h2>
