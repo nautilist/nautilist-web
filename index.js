@@ -14,6 +14,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(require('./stores/api'))
 app.use(require('./stores/main'))
 app.use(require('./stores/user'))
+app.use(require('./stores/userPage'))
 app.use(require('./stores/modals'))
 
 app.route('/', require('./views/Home'))
