@@ -7,6 +7,10 @@ const AddFeatureBtn = require('../../../../components/AddFeatureBtn')
 const AddLinkModal = require('../../../../components/AddLinkModal')
 const AddListModal = require('../../../../components/AddListModal')
 
+const ListTabView = require('./components/ListTabView')
+const LinkTabView = require('./components/LinkTabView')
+const ListFollowingTabView = require('./components/ListFollowingTabView')
+
 
 var TITLE = `nautilists - user`
 
@@ -44,7 +48,7 @@ function Header(state, emit){
     }
     
     return html`
-        <header class="${styles.sectionmw7} h-auto outline mt4">
+        <header class="${styles.sectionmw7} h-auto ba bw1 dropshadow mt4 pa2">
             <div class="w-100 flex flex-column flex-row items-center">
                 <img class="ma0 pa0 dib h3 dropshadow ba bw1" src="/assets/${avatar}">
                 <h1 class="ma0 pa0 pl3 f3 f2-ns">${username}</h1>
@@ -82,40 +86,23 @@ function UserTabSelect(state, emit){
         }
     }
 
+    function highlightTab(tabName){
+        if(state.userPage.selectedTab === tabName){
+            return 'bg-pink navy'
+        } else {
+            return 'bg-near-white navy'
+        }
+    }
+
     return html`
-        <section class="${styles.sectionmw7} outline flex flex-column flex-row-ns">
-            <ul class="list pa0 pl0 flex flex-row">
-                <li class="pa0"><button onclick=${switchTab('lists')}>lists</button></li>
-                <li class="pa0"><button onclick=${switchTab('links')}>links</button></li>
+        <section class="${styles.sectionmw7} pa0 ma0 flex flex-column flex-row-ns mt4 justify-between-ns justify-start flex-wrap">
+            <ul class="list pa0 pl0 flex flex-row ma0">
+                <li class="pa0 mr2"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('lists')}" onclick=${switchTab('lists')}>lists</button></li>
+                <li class="pa0 mr2"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('links')}" onclick=${switchTab('links')}>links</button></li>
             </ul>
-            <ul class="list pl0 dn">
-                <li></li>
-                <li></li>
+            <ul class="list pa0 pl0 flex flex-row ma0">
+            <li class="pa0 ml2"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('listsFollowing')}" onclick=${switchTab('listsFollowing')}>lists I follow</button></li>
             </ul>
         </section>
-    `
-}
-
-function ListTabView(state, emit){
-    return html`
-    <section class="${styles.sectionmw7}">
-    list
-    </section>
-    `
-}
-
-function LinkTabView(state, emit){
-    return html`
-    <section class="${styles.sectionmw7}">
-    link
-    </section>
-    `
-}
-
-function ListFollowingTabView(state, emit){
-    return html`
-    <section class="${styles.sectionmw7}">
-    listFollowing
-    </section>
     `
 }

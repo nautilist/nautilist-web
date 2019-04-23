@@ -51,7 +51,7 @@ module.exports = {
     footer:`w-100 flex flex-column flex-row-ns min-height-180px bg-near-white bg-navy pink`,
     aTag:`link black pointer`,
     modalContainer:`w-100 h-100 fixed top-0 left-0 bg-light-green max-z flex flex-column`,
-    sectionmw7:`w-100 h-100 mw7 pa2`,
+    sectionmw7:`w-100 h-auto mw7`,
     fieldset:`w-100 dropshadow ba bw1 b--black mt3 mb3 pa2 bg-white`,
     modalInput:`w-100 bg-near-white f6 bn pa2`,
     legend:`pl3 pr3`,
