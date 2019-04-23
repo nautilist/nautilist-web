@@ -25,7 +25,7 @@ function isAuthd(state, emit){
     const {username} = user;
     return html`
         <div>
-            <p>Hello <a class="${styles.aTag} b underline">${username}</a> · ${logoutBtn(state,emit)}</p>
+            <p>Hello <a href="/users/${username}" class="${styles.aTag} b underline">${username}</a> · ${logoutBtn(state,emit)}</p>
         </div>
     `
 }
