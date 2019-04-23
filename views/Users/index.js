@@ -6,6 +6,7 @@ const Footer = require('../../components/Footer')
 const AddFeatureBtn = require('../../components/AddFeatureBtn')
 
 const UsersPage = require('./components/UsersPage')
+const UserPage = require('./components/UserPage')
 
 var TITLE = 'nautilists - user'
 
@@ -26,18 +27,3 @@ function view (state, emit) {
   }
 }
 
-
-function UserPage(state, emit){
-    
-    return html`
-        <body class="${styles.body}">
-            ${NavbarTop(state, emit)}
-            <main class="${styles.main}">
-                ${state.params.username}
-            </main>
-            ${Footer(state, emit)}
-            ${MobileNavMenuModal(state, emit)}
-            ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
-        </body>
-    `
-}
