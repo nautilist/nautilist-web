@@ -45,6 +45,7 @@ function EditProfileForm(state, emit){
 // onchange=${changeImage}
 function inputEmojiSelect(state, emit){
     const {profile} = state.main.selected.user;
+    const {emojis, selectedEmoji} = profile;
 
     function changeImage(e){
         emit('EDITPROFILEMODAL_UPDATE_EMOJI', e.target.value)
@@ -52,7 +53,9 @@ function inputEmojiSelect(state, emit){
 
     return html`
         <fieldset class="${styles.fieldset}">
-            <legend class="${styles.legend}">Profile Photo</legend>
+            <legend class="${styles.legend}">Profile Avatar</legend>
+            <img class="w4 ba bw1 dropshadow" src="/assets/${emojis[selectedEmoji]}">
+            <br>
             <select class="w4" name="selectedEmoji" onchange=${changeImage}>
             ${profile.emojis.map( (emoji, idx) => {
               const emojiname = emoji.split('-')[0].toLowerCase()
@@ -69,7 +72,6 @@ function inputEmojiSelect(state, emit){
 }
 
 function inputBio(state, emit){
-
     return html`
         <fieldset class="${styles.fieldset}">
             <legend class="${styles.legend}">Bio</legend>
