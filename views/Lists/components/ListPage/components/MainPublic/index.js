@@ -17,11 +17,20 @@ function view(list){
 
 
 function PublicHeader(list){
+    const {name, description} = list;
+    const{followersDetails} = list;
+    
+    if(!followersDetails){
+        return ''
+    }
+
+    const numFollowers = followersDetails.length
+
     return html`
         <header class="w-100 pa3 ba bw1 b--black dropshadow">
-            PUBLIC
-            <h1 class="ma0 pa0 f3-ns f4">${list.name} </h1>
-            <p class="ma0 pa0 f5-ns f6">${list.description}</p>
+            <p class="ma0 pa0 f7">${numFollowers} followers</p>
+            <h1 class="ma0 pa0 f3-ns f4">${name}</h1>
+            <p class="ma0 pa0 f5-ns f6">${description}</p>
         </header>
     `
 }

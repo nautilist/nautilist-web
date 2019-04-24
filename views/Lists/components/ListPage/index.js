@@ -49,7 +49,7 @@ function goBackBtn(state, emit){
     
     return html`
     <section class="${styles.sectionmw7}">
-    <button class="bg-transparent f7 bn" onclick=${navigateBack}>← <span class="underline">Go back</span></button>
+        <button class="bg-transparent f7 bn" onclick=${navigateBack}>← <span class="underline">Go back</span></button>
     </section>
     `
 }
@@ -80,13 +80,24 @@ function ToggleEditableBtn(state, emit){
     `
 }
 
+function EditableState(state, emit){
+    const {editable} = state.listPage;
+    if(!editable === true){
+        return ''
+    }
+    return html`
+        <p class="ml3-ns ma0 pa0">now in edit mode ✨</p>
+    `
+}
+
 function EditingToolBar(state, emit){
     if(!state.listPage.canEdit){
         return ''
     }
     return html`
-        <section class="${styles.sectionmw7} flex flex-row-ns mt4">
+        <section class="${styles.sectionmw7} flex flex-row-ns mt4 items-center">
             ${ToggleEditableBtn(state, emit)}
+            ${EditableState(state, emit)}
         </section>
     `
 }
