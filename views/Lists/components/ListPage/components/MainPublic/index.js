@@ -80,7 +80,7 @@ function LinkCard(link, sectionsDetails){
             <div class="w-75-ns w-100">
             <small class="f8 ma0 pa0">${url}</small>
             <h2 class="pa0 ma0 f4 f5-ns">${name}</h2>
-            <p class="pa0 ma0 f7 f6-ns">${description}</p>
+            <p class="pa0 mt2 f7 f6-ns">${description}</p>
             </div>
             <div class="w-25-ns w-100 tr">
             <small class="f8 ma0 pa0">${formatTime(updatedAt)}</small>

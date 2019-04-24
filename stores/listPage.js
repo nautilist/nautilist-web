@@ -24,6 +24,13 @@ function store(state, emitter) {
     emitter.on('LISTPAGE_FOLLOW', triggerFollow)
     emitter.on('LISTPAGE_UNFOLLOW', triggerUnFollow)
 
+    // IF NAVIGATED TO LIST PAGE, TRIGGER GET
+    emitter.on('navigate', ()=>{
+        if(state.route === 'lists/:_id'){
+            emitter.emit('LISTS_GET', state.params._id)
+        }
+    })
+
 
     function triggerFollow(){
         const {user} = state;
