@@ -17,7 +17,7 @@ function view(list){
 
 
 function PublicHeader(list){
-    const {name, description} = list;
+    const {name, description, ownerDetails} = list;
     const{followersDetails} = list;
     
     if(!followersDetails){
@@ -30,6 +30,7 @@ function PublicHeader(list){
         <header class="w-100 pa3 ba bw1 b--black dropshadow">
             <p class="ma0 pa0 f7">${numFollowers} followers</p>
             <h1 class="ma0 pa0 f3-ns f4">${name}</h1>
+            <p class="ma0 pa0 f7">by ${ownerDetails.username}</p>
             <p class="ma0 pa0 f5-ns f6">${description}</p>
         </header>
     `

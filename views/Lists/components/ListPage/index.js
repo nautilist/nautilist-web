@@ -115,8 +115,11 @@ function PublicToolBar(state, emit){
 }
 
 function RemixListBtn(state, emit){
+    function triggerRemix(e){
+        emit("LISTPAGE_REMIX")
+    }
     return html`
-    <button class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-purple light-green">Remix</button>
+    <button onclick=${triggerRemix} class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-purple light-green">Remix</button>
     `
 }
 
@@ -126,6 +129,7 @@ function FollowListBtn(state, emit){
     function triggerFollow(e){
         emit('LISTPAGE_FOLLOW')
     }
+
     function triggerUnFollow(e){
         emit('LISTPAGE_UNFOLLOW')
     }

@@ -1,3 +1,4 @@
+const helpers = require('../helpers');
 module.exports = store
 
 function store(state, emitter) {
@@ -23,6 +24,7 @@ function store(state, emitter) {
     emitter.on('LISTPAGE_CHECK_EDITABLE', checkEditable)
     emitter.on('LISTPAGE_FOLLOW', triggerFollow)
     emitter.on('LISTPAGE_UNFOLLOW', triggerUnFollow)
+    emitter.on('LISTPAGE_REMIX', triggerRemix)
 
     // IF NAVIGATED TO LIST PAGE, TRIGGER GET
     emitter.on('navigate', ()=>{
@@ -31,6 +33,22 @@ function store(state, emitter) {
         }
     })
 
+
+    function triggerRemix(){
+        const {user} = state;
+        const {_id} = state.params
+        const {lists} = state.main.selected;
+        if(!user.authenticated){
+            alert('You must be logged in to follow a list');
+            return false;
+        }
+
+        let sanitizedResult = helpers.removeIds(lists);
+        sanitizedResult.followers = [];
+
+        emitter.emit('LISTS_CREATE', sanitizedResult)
+
+    }
 
     function triggerFollow(){
         const {user} = state;

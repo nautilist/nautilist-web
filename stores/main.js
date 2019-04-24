@@ -44,7 +44,7 @@ function store (state, emitter) {
 
         get(query){
             const myQuery = query ? query : {};
-            let output = state.api[this.db].get(myQuery)
+            const output = state.api[this.db].get(myQuery)
                 .then(result => {
                     state.main.selected[this.db] = result;
                     return result;
@@ -55,14 +55,16 @@ function store (state, emitter) {
         }
 
         create(payload){
-            state.api[this.db].create(payload)
+            const output = state.api[this.db].create(payload)
                 .then(result => {
                     // state.main[this.db].push(result);
                     // 
+                    alert(`list created: ${result.name}`)
                     return result;
                 }).catch(err => {
                     alert(err);
                 })
+            return Promise.resolve(output)
         }
 
         patch(id, data, params){
@@ -120,6 +122,7 @@ state.main = {
   state.events.LISTS_GET = "LISTS_GET";
   state.events.LISTS_REMOVE = "LISTS_REMOVE";
   state.events.LISTS_PATCH = "LISTS_PATCH";
+  state.events.LISTS_CREATE = "LISTS_CREATE";
 
   state.events.USERS_FIND = "USERS_FIND";
   state.events.USERS_FIND_MORE = "USERS_FIND_MORE";
@@ -156,6 +159,12 @@ state.main = {
             })
     })
     emitter.on('LISTS_PATCH', listsApi.patch)
+    emitter.on('LISTS_CREATE', (payload) => {
+        listsApi.create(payload)
+            .then(result => {
+                emitter.emit('pushState', `/lists/${result._id}`)
+            })
+    })
 
 
     emitter.on('LINKS_FIND', linksApi.find)
