@@ -121,9 +121,23 @@ function RemixListBtn(state, emit){
 }
 
 function FollowListBtn(state, emit){
+    const {_id} = state.user
+    const {followers} = state.main.selected.lists
     function triggerFollow(e){
         emit('LISTPAGE_FOLLOW')
     }
+    function triggerUnFollow(e){
+        emit('LISTPAGE_UNFOLLOW')
+    }
+
+    const isFollowing = followers ? followers.includes(_id) : ''
+
+    if(isFollowing === true){
+        return html`
+            <button onclick=${triggerUnFollow} class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Unfollow</button>
+            `    
+    }
+
     return html`
     <button onclick=${triggerFollow} class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Follow</button>
     `

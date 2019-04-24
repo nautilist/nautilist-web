@@ -11,6 +11,7 @@ function store(state, emitter) {
     state.events.LISTPAGE_REMIX = "LISTPAGE_REMIX"
     state.events.LISTPAGE_DISPLAY_FOLLOWERS = "LISTPAGE_DISPLAY_FOLLOWERS"
     state.events.LISTPAGE_FOLLOW = "LISTPAGE_FOLLOW"
+    state.events.LISTPAGE_FOLLOW = "LISTPAGE_UNFOLLOW"
     state.events.LISTPAGE_ADD_COLLABORATOR = "LISTPAGE_ADD_COLLABORATOR"
     state.events.LISTPAGE_ADD_LINK = "LISTPAGE_ADD_LINK"
     state.events.LISTPAGE_ADD_SECTION = "LISTPAGE_ADD_SECTION"
@@ -21,6 +22,7 @@ function store(state, emitter) {
     emitter.on('LISTPAGE_TOGGLE_EDITABLE', toggleEditable)
     emitter.on('LISTPAGE_CHECK_EDITABLE', checkEditable)
     emitter.on('LISTPAGE_FOLLOW', triggerFollow)
+    emitter.on('LISTPAGE_UNFOLLOW', triggerUnFollow)
 
 
     function triggerFollow(){
@@ -37,7 +39,25 @@ function store(state, emitter) {
         }
 
         emitter.emit('LISTS_PATCH', _id, data, {})
-        emitter.emit('render');
+        emitter.emit('render'); 
+    }
+
+    function triggerUnFollow(){
+        const {user} = state;
+        const {_id} = state.params
+        if(!user.authenticated){
+            alert('You must be logged in to unfollow a list');
+            return false;
+        }
+        const data = {
+            $pull:{
+                followers: user._id
+            }
+        }
+
+        emitter.emit('LISTS_PATCH', _id, data, {})
+        emitter.emit('render'); 
+
     }
 
     function toggleEditable(){
