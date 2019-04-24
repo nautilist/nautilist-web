@@ -9,6 +9,7 @@ function store (state, emitter) {
             this.findMore = this.findMore.bind(this);
             this.get = this.get.bind(this);
             this.create = this.create.bind(this);
+            this.patch = this.patch.bind(this);
         }
 
         find(query){
@@ -63,6 +64,19 @@ function store (state, emitter) {
                     alert(err);
                 })
         }
+
+        patch(id, data, params){
+            state.api[this.db].patch(id, data, params)
+                .then(result => {
+                    // state.main[this.db].push(result);
+                    // 
+                    return result;
+                }).catch(err => {
+                    alert(err);
+                })
+        }
+
+
     }
 
     const listsApi = new API('lists');
@@ -141,6 +155,7 @@ state.main = {
                 emitter.emit('render')
             })
     })
+    emitter.on('LISTS_PATCH', listsApi.patch)
 
 
     emitter.on('LINKS_FIND', linksApi.find)

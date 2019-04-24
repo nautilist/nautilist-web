@@ -121,7 +121,10 @@ function RemixListBtn(state, emit){
 }
 
 function FollowListBtn(state, emit){
+    function triggerFollow(e){
+        emit('LISTPAGE_FOLLOW')
+    }
     return html`
-    <button class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Follow</button>
+    <button onclick=${triggerFollow} class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Follow</button>
     `
 }

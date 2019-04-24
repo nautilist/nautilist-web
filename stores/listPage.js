@@ -20,6 +20,25 @@ function store(state, emitter) {
 
     emitter.on('LISTPAGE_TOGGLE_EDITABLE', toggleEditable)
     emitter.on('LISTPAGE_CHECK_EDITABLE', checkEditable)
+    emitter.on('LISTPAGE_FOLLOW', triggerFollow)
+
+
+    function triggerFollow(){
+        const {user} = state;
+        const {_id} = state.params
+        if(!user.authenticated){
+            alert('You must be logged in to follow a list');
+            return false;
+        }
+        const data = {
+            $push:{
+                followers: user._id
+            }
+        }
+
+        emitter.emit('LISTS_PATCH', _id, data, {})
+        emitter.emit('render');
+    }
 
     function toggleEditable(){
         if(state.listPage.canEdit === true){
