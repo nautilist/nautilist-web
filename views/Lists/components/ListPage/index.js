@@ -28,6 +28,7 @@ function view (state, emit) {
   <main class="${styles.main}">
       <section class="w-100 flex flex-column items-center mt4">
         ${goBackBtn(state, emit)}
+        ${PublicToolBar(state, emit)}
         ${EditingToolBar(state, emit)}
         ${MainView(state, emit)}
       </section>
@@ -103,3 +104,24 @@ function EditingToolBar(state, emit){
 }
 
 
+
+function PublicToolBar(state, emit){
+    return html`
+        <section class="${styles.sectionmw7} flex flex-row-ns mt3 items-center">
+            ${FollowListBtn(state, emit)}
+            ${RemixListBtn(state, emit)}
+        </section>
+    `
+}
+
+function RemixListBtn(state, emit){
+    return html`
+    <button class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-purple light-green">Remix</button>
+    `
+}
+
+function FollowListBtn(state, emit){
+    return html`
+    <button class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Follow</button>
+    `
+}
