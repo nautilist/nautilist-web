@@ -10,6 +10,7 @@ function store (state, emitter) {
             this.get = this.get.bind(this);
             this.create = this.create.bind(this);
             this.patch = this.patch.bind(this);
+            this.remove = this.remove.bind(this);
         }
 
         find(query){
@@ -77,6 +78,22 @@ function store (state, emitter) {
                     alert(err);
                 })
         }
+
+        remove(_id){
+            const output = state.api[this.db].remove(_id)
+                .then(result => {
+                    // state.main[this.db].push(result);
+                    emitter.emit('USERS_SET_SELECTED', state.user.username);
+                    emitter.emit('pushState', `/users/${state.user.username}`)
+                    
+                    // emitter.emit('pushState', `/users/${state.user.username}`)
+                    return result;
+                }).catch(err => {
+                    alert(err);
+                })
+            return Promise.resolve(output)
+        }
+
 
 
     }
@@ -165,6 +182,7 @@ state.main = {
                 emitter.emit('pushState', `/lists/${result._id}`)
             })
     })
+    emitter.on('LISTS_REMOVE', listsApi.remove)
 
 
     emitter.on('LINKS_FIND', linksApi.find)

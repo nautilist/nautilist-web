@@ -6,6 +6,8 @@ function store(state, emitter) {
     state.listPage = {
         editable: false,
         canEdit: false,
+        sortable: null,
+        sortables: []
     }
 
     state.events.LISTPAGE_TOGGLE_EDITABLE = "LISTPAGE_TOGGLE_EDITABLE"
@@ -16,7 +18,9 @@ function store(state, emitter) {
     state.events.LISTPAGE_ADD_COLLABORATOR = "LISTPAGE_ADD_COLLABORATOR"
     state.events.LISTPAGE_ADD_LINK = "LISTPAGE_ADD_LINK"
     state.events.LISTPAGE_ADD_SECTION = "LISTPAGE_ADD_SECTION"
-    state.events.LISTPAGE_DELETE_LIST = "LISTPAGE_DELETE_LIST"
+    state.events.LISTPAGE_REMOVE_LINK = "LISTPAGE_REMOVE_LINK"
+    state.events.LISTPAGE_REMOVE_SECTION = "LISTPAGE_REMOVE_SECTION"
+    state.events.LISTPAGE_REMOVE_LIST = "LISTPAGE_REMOVE_LIST"
 
     state.events.LISTPAGE_CHECK_EDITABLE = "LISTPAGE_CHECK_EDITABLE"
 
@@ -25,6 +29,7 @@ function store(state, emitter) {
     emitter.on('LISTPAGE_FOLLOW', triggerFollow)
     emitter.on('LISTPAGE_UNFOLLOW', triggerUnFollow)
     emitter.on('LISTPAGE_REMIX', triggerRemix)
+    emitter.on('LISTPAGE_REMOVE_LIST', removeList)
 
     // IF NAVIGATED TO LIST PAGE, TRIGGER GET
     emitter.on('navigate', ()=>{
@@ -32,6 +37,22 @@ function store(state, emitter) {
             emitter.emit('LISTS_GET', state.params._id)
         }
     })
+
+    function removeList(){
+        const {user} = state;
+        if(!user.authenticated){
+            alert('You must be logged in to follow a list');
+            return false;
+        }
+        const {_id} = state.params
+
+        let c = confirm('Are you sure you want to delete this forever?')
+        if(c === true ){
+            emitter.emit('LISTS_REMOVE', _id);    
+        }
+
+        return false;
+    }
 
 
     function triggerRemix(){

@@ -81,6 +81,12 @@ function ToggleEditableBtn(state, emit){
     `
 }
 
+function RemoveListBtn(state, emit){
+    return html`
+    <button class="pa2 ba bw1 b--black bg-red pointer ml2-ns dropshadow" onclick=${() => emit('LISTPAGE_REMOVE_LIST')}>DELETE FOREVER</button>
+    `
+}
+
 function EditableState(state, emit){
     const {editable} = state.listPage;
     if(!editable === true){
@@ -99,6 +105,7 @@ function EditingToolBar(state, emit){
         <section class="${styles.sectionmw7} flex flex-row-ns mt4 items-center">
             ${ToggleEditableBtn(state, emit)}
             ${EditableState(state, emit)}
+            ${RemoveListBtn(state, emit)}
         </section>
     `
 }
