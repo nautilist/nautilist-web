@@ -89,7 +89,7 @@ state.main = {
               links: {},
               lists: {},
               listsFollowing: {},
-              following: {},
+            //   following: {},
               followers: {}
           },
       }
@@ -150,13 +150,20 @@ state.main = {
 
         state.api.users.find({query:{username: username}})
             .then(result => {
-                console.log(result)
                 userid = result.data[0]._id;
                 state.main.selected.user.profile = result.data[0];
                 query = setQueryUserid(userid);
                 return state.api.lists.find(query)
             }).then(result => {
                 state.main.selected.user.lists = result;
+                const userListsFollowing = setQueryFollowersId(userid)
+                return state.api.lists.find(userListsFollowing)
+            }).then(result => {
+                state.main.selected.user.listsFollowing = result;
+                const followersQuery = setQueryFollowingId(userid)
+                return state.api.users.find(followersQuery)
+            }).then(result => {
+                state.main.selected.user.followers = result;
                 return state.api.links.find(query)
             }).then(result => {
                 state.main.selected.user.links = result;
@@ -191,5 +198,83 @@ state.main = {
         }};
   }
 
+  function setQueryFollowersId(userid){
+    return {
+        query:{ 
+          "followers": {
+            "$in": [userid]
+          }
+        }
+      }
+  }
+
+  function setQueryFollowingId(userid){
+      return {
+        query:{ 
+          "following": {
+            "$in": [userid]
+          }
+        }
+      }
+
+    }
+
   
 }
+
+
+/** 
+
+let findFollowers = {
+      query:{ 
+        "followers": {
+          "$in": []
+        }
+      }
+    }
+
+    let findUserFollowers = {
+      query:{ 
+        "following": {
+          "$in": []
+        }
+      }
+    }
+
+    findFollowers.query.followers.$in = [state.selectedUser.profile._id];
+        return state.api.lists.find(findFollowers)
+    
+
+        state.api.users.find(findByUsername)
+      .then(result => {
+        state.selectedUser.profile = result.data[0];
+        queryParams.query.$or[0].owner = state.selectedUser.profile._id;
+        queryParams.query.$or[1].collaborators.$in = [state.selectedUser.profile._id];
+        return state.api.links.find(queryParams)
+      })
+      .then(result => {
+        state.selectedUser.links = result.data;
+        return state.api.lists.find(queryParams)
+      })
+      .then(result => {
+        state.selectedUser.lists = result.data;
+        findFollowers.query.followers.$in = [state.selectedUser.profile._id];
+        return state.api.lists.find(findFollowers)
+      })
+      .then(result => {
+        state.selectedUser.listsFollowing = result.data;
+        findUserFollowers.query.following.$in = [state.selectedUser.profile._id];
+        return state.api.users.find(findUserFollowers)
+      })
+      .then(result => {
+        state.selectedUser.followers = result.data;
+        emitter.emit('render');
+      })
+      .catch(err =>{
+        alert(err);
+      })
+
+
+
+
+ */

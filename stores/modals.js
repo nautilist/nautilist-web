@@ -24,6 +24,10 @@ function store(state, emitter) {
             description: '',
             tags: [],
             links: []
+        },
+        editProfileModal: {
+            displayed: false,
+            bio:'',
         }
     }
 
@@ -39,6 +43,8 @@ function store(state, emitter) {
     state.events.ADDLINKMODAL_SECTIONSELECT_TOGGLE = 'ADDLINKMODAL_SECTIONSELECT_TOGGLE';
     state.events.ADDLINKMODAL_SUBMIT = 'ADDLINKMODAL_SUBMIT';
 
+    state.events.EDITPROFILEMODAL_TOGGLE = 'EDITPROFILEMODAL_TOGGLE';
+    state.events.EDITPROFILEMODAL_SUBMIT = 'EDITPROFILEMODAL_SUBMIT';
     state.events.modal_handle_keyup = "modal_handle_keyup"
 
     // Events
@@ -55,6 +61,32 @@ function store(state, emitter) {
     emitter.on('ADDLINKMODAL_LISTSELECT_TOGGLE', toggleListSelect)
     emitter.on('ADDLINKMODAL_SECTIONSELECT_TOGGLE', toggleSectionSelect)
     emitter.on('ADDLINKMODAL_SUBMIT', addLinkModal_submit)
+
+    // EDIT PROFILE
+    emitter.on('EDITPROFILEMODAL_TOGGLE', toggleDisplayed('editProfileModal'))
+    emitter.on('EDITPROFILEMODAL_UPDATE_EMOJI', (val)=> {
+        const {_id, username} = state.user;
+        state.api.users.patch(_id, {selectedEmoji: val})
+            .then(result => {
+                emitter.emit('USERS_SET_SELECTED', username)
+            })
+            .catch(err => {
+                alert(err);
+            });
+    })
+    emitter.on('EDITPROFILEMODAL_SUBMIT', ()=> {
+        const {_id, username} = state.user;
+        const {bio} = state.modals.editProfileModal
+        state.api.users.patch(_id, {bio})
+            .then(result => {
+                emitter.emit('USERS_SET_SELECTED', username)
+                emitter.emit('EDITPROFILEMODAL_TOGGLE')
+            })
+            .catch(err => {
+                alert(err);
+            });
+    })
+
 
     emitter.on('modal_handle_keyup', modal_handle_keyup)
 

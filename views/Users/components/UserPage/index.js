@@ -10,7 +10,7 @@ const AddListModal = require('../../../../components/AddListModal')
 const ListTabView = require('./components/ListTabView')
 const LinkTabView = require('./components/LinkTabView')
 const ListFollowingTabView = require('./components/ListFollowingTabView')
-
+const EditProfileModal = require('../../../../components/EditProfileModal')
 
 var TITLE = `nautilists - user`
 
@@ -35,6 +35,7 @@ function view (state, emit) {
   ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
   ${AddLinkModal(state, emit)}
   ${AddListModal(state, emit)}
+  ${EditProfileModal(state, emit)}
 </body>
   `
 }
@@ -49,11 +50,13 @@ function Header(state, emit){
     
     return html`
         <header class="${styles.sectionmw7} h-auto ba bw1 dropshadow mt4 pa2">
+            <p class="pa0 ma0 w-100 tr">${EditProfileBtn(state, emit)}</p>    
             <div class="w-100 flex flex-column flex-row items-center">
                 <img class="ma0 pa0 dib h3 dropshadow ba bw1" src="/assets/${avatar}">
                 <h1 class="ma0 pa0 pl3 f3 f2-ns">${username}</h1>
             </div>
             <p>${bio}</p>
+            
         </header>
     `
 }
@@ -118,4 +121,14 @@ function UserTabSelect(state, emit){
             </ul>
         </section>
     `
+}
+
+function EditProfileBtn(state, emit){
+    const {authenticated, username} = state.user;
+    
+    if(authenticated && state.params.username === username){
+        return html`
+        <button class="bg-transparent bn f7 underline black" onclick=${()=> emit('EDITPROFILEMODAL_TOGGLE')}>edit profile</button>
+        `
+    }
 }
