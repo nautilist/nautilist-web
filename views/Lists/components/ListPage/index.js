@@ -29,6 +29,7 @@ function view (state, emit) {
       <section class="w-100 flex flex-column items-center mt4">
         ${goBackBtn(state, emit)}
         ${PublicToolBar(state, emit)}
+        ${EditableState(state, emit)}
         ${EditingToolBar(state, emit)}
         ${MainView(state, emit)}
       </section>
@@ -83,7 +84,19 @@ function ToggleEditableBtn(state, emit){
 
 function RemoveListBtn(state, emit){
     return html`
-    <button class="pa2 ba bw1 b--black bg-red pointer ml2-ns dropshadow" onclick=${() => emit('LISTPAGE_REMOVE_LIST')}>DELETE FOREVER</button>
+    <button class="ml2-ns pa2 ba bw1 b--black bg-red pointer ml2-ns dropshadow" onclick=${() => emit('LISTPAGE_REMOVE_LIST')}>DELETE FOREVER</button>
+    `
+}
+
+function AddSectionBtn(state, emit){
+    return html`
+    <button class="ml2-ns pa2 ba bw1 b--pink bg-light-green dropshadow" onclick=${() => emit('LISTPAGE_ADD_SECTION')}>Add Section</button>
+    `
+}
+
+function AddLinkToSectionBtn(state, emit){
+    return html`
+    <button class="ml2-ns pa2 ba bw1 b--pink bg-washed-red dropshadow" onclick=${() => emit('LISTPAGE_ADD_LINK_TO_SECTION')}>Add Link</button>
     `
 }
 
@@ -102,10 +115,15 @@ function EditingToolBar(state, emit){
         return ''
     }
     return html`
-        <section class="${styles.sectionmw7} flex flex-row-ns mt4 items-center">
-            ${ToggleEditableBtn(state, emit)}
-            ${EditableState(state, emit)}
-            ${RemoveListBtn(state, emit)}
+        <section class="${styles.sectionmw7} flex flex-row-ns mt4 items-center justify-between-ns">
+            <div>
+                ${ToggleEditableBtn(state, emit)}
+                ${AddSectionBtn(state, emit)}
+                ${AddLinkToSectionBtn(state, emit)}
+            </div>
+            <div>
+                ${RemoveListBtn(state, emit)}
+            </div>
         </section>
     `
 }
