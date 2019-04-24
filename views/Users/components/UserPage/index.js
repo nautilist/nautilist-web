@@ -56,7 +56,6 @@ function Header(state, emit){
                 <h1 class="ma0 pa0 pl3 f3 f2-ns">${username}</h1>
             </div>
             <p>${bio}</p>
-            
         </header>
     `
 }

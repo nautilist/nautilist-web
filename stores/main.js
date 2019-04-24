@@ -43,14 +43,14 @@ function store (state, emitter) {
 
         get(query){
             const myQuery = query ? query : {};
-            // console.log(myQuery)
-            state.api[this.db].get(myQuery)
+            let output = state.api[this.db].get(myQuery)
                 .then(result => {
                     state.main.selected[this.db] = result;
                     return result;
                 }).catch(err => {
                     alert(err);
                 })
+            return Promise.resolve(output)
         }
 
         create(payload){
@@ -134,7 +134,13 @@ state.main = {
   emitter.on('DOMContentLoaded', function () {
     emitter.on('LISTS_FIND', listsApi.find)
     emitter.on('LISTS_FIND_MORE', listsApi.findMore);
-    emitter.on('LISTS_GET', listsApi.get)
+    emitter.on('LISTS_GET', (query) => {
+        listsApi.get(query)
+            .then(result => {
+                emitter.emit('LISTPAGE_CHECK_EDITABLE', result);
+                emitter.emit('render')
+            })
+    })
 
 
     emitter.on('LINKS_FIND', linksApi.find)

@@ -16,6 +16,7 @@ app.use(require('./stores/main'))
 app.use(require('./stores/user'))
 app.use(require('./stores/userPage'))
 app.use(require('./stores/modals'))
+app.use(require('./stores/listPage'))
 
 app.route('/', require('./views/Home'))
 app.route('/login', require('./views/Auth'))
@@ -31,10 +32,10 @@ app.route('/users', require('./views/Users'))
 app.route('/users/:username', require('./views/Users'))
 
 app.route('/links', require('./views/Links'))
-app.route('/links/:id', require('./views/Links'))
+app.route('/links/:_id', require('./views/Links'))
 
 app.route('/lists', require('./views/Lists'))
-app.route('/lists/:id', require('./views/Lists'))
+app.route('/lists/:_id', require('./views/Lists'))
 
 app.route('/*', require('./views/404'))
 
