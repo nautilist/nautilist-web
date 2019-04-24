@@ -66,7 +66,7 @@ function MainView(state, emit){
 
    switch(state.listPage.editable){
        case true:
-        return MainEditable(lists);
+        return MainEditable(lists, state, emit);
         break;
        case false:
         return MainPublic(lists);
@@ -78,25 +78,31 @@ function MainView(state, emit){
 
 function ToggleEditableBtn(state, emit){
     return html`
-    <button class="pa2 ba bw1 b--pink bg-near-white dropshadow" onclick=${() => emit('LISTPAGE_TOGGLE_EDITABLE')}>Edit List</button>
+    <button class="f7 pa2 ba bw1 b--pink bg-near-white dropshadow" onclick=${() => emit('LISTPAGE_TOGGLE_EDITABLE')}>Edit List</button>
     `
 }
 
 function RemoveListBtn(state, emit){
     return html`
-    <button class="ml2-ns pa2 ba bw1 b--black bg-red pointer ml2-ns dropshadow" onclick=${() => emit('LISTPAGE_REMOVE_LIST')}>DELETE FOREVER</button>
+    <button class="f7 ml2-ns pa2 ba bw1 b--light-red bg-light-red pointer ml2-ns dropshadow" onclick=${() => emit('LISTPAGE_REMOVE_LIST')}>DELETE FOREVER</button>
     `
 }
 
 function AddSectionBtn(state, emit){
     return html`
-    <button class="ml2-ns pa2 ba bw1 b--pink bg-light-green dropshadow" onclick=${() => emit('LISTPAGE_ADD_SECTION')}>Add Section</button>
+    <button class="f7 ml2-ns pa2 ba bw1 b--light-green bg-light-green dropshadow" onclick=${() => emit('LISTPAGE_ADD_SECTION')}>Add Section</button>
     `
 }
 
 function AddLinkToSectionBtn(state, emit){
     return html`
-    <button class="ml2-ns pa2 ba bw1 b--pink bg-washed-red dropshadow" onclick=${() => emit('LISTPAGE_ADD_LINK_TO_SECTION')}>Add Link</button>
+    <button class="f7 ml2-ns pa2 ba bw1 b--washed-red bg-washed-red dropshadow" onclick=${() => emit('LISTPAGE_ADD_LINK_TO_SECTION')}>Add Link</button>
+    `
+}
+
+function AddCollaboratorBtn(state, emit){
+    return html`
+    <button class="f7 ml2-ns pa2 ba bw1 b--dark-blue bg-dark-blue pink dropshadow" onclick=${() => emit('LISTPAGE_ADD_COLLABORATOR')}>Add Collaborator</button>
     `
 }
 
@@ -115,11 +121,12 @@ function EditingToolBar(state, emit){
         return ''
     }
     return html`
-        <section class="${styles.sectionmw7} flex flex-row-ns mt4 items-center justify-between-ns">
+        <section class="${styles.sectionmw7} flex flex-row-ns mt4 items-center justify-between-ns flex-wrap-reverse">
             <div>
                 ${ToggleEditableBtn(state, emit)}
                 ${AddSectionBtn(state, emit)}
                 ${AddLinkToSectionBtn(state, emit)}
+                ${AddCollaboratorBtn(state, emit)} 
             </div>
             <div>
                 ${RemoveListBtn(state, emit)}
@@ -144,7 +151,7 @@ function RemixListBtn(state, emit){
         emit("LISTPAGE_REMIX")
     }
     return html`
-    <button onclick=${triggerRemix} class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-purple light-green">Remix</button>
+    <button onclick=${triggerRemix} class="f7 mr2-ns ma0 pa2 bg-near-white dropshadow bg-purple light-green">Remix</button>
     `
 }
 
@@ -163,11 +170,11 @@ function FollowListBtn(state, emit){
 
     if(isFollowing === true){
         return html`
-            <button onclick=${triggerUnFollow} class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Unfollow</button>
+            <button onclick=${triggerUnFollow} class="f7 mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Unfollow</button>
             `    
     }
 
     return html`
-    <button onclick=${triggerFollow} class="mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Follow</button>
+    <button onclick=${triggerFollow} class="f7 mr2-ns ma0 pa2 bg-near-white dropshadow bg-yellow navy">Follow</button>
     `
 }
