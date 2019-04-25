@@ -15,9 +15,27 @@ function view(list){
     `
 }
 
+function showCollaborators(collaboratorDetails){
+    if(!collaboratorDetails.length > 0){
+        return ''
+    }
+
+    const els = collaboratorDetails.map(collaborator => {
+        return html`
+            <a class="${styles.aTag}" href="/users/${collaborator.username}">${collaborator.username}</a>
+        `
+    })
+    
+    return html`
+    <p class="ma0 pa0 f7">together with ${els}</p>
+    `
+
+    
+}
+
 
 function PublicHeader(list){
-    const {name, description, ownerDetails} = list;
+    const {name, description, ownerDetails, collaboratorDetails} = list;
     const{followersDetails} = list;
     
     if(!followersDetails){
@@ -31,6 +49,7 @@ function PublicHeader(list){
             <p class="ma0 pa0 f7">${numFollowers} followers</p>
             <h1 class="ma0 pa0 f3-ns f4">${name}</h1>
             <p class="ma0 pa0 f7">by ${ownerDetails.username}</p>
+            ${showCollaborators(collaboratorDetails)}
             <p class="ma0 pa0 f5-ns f6">${description}</p>
         </header>
     `

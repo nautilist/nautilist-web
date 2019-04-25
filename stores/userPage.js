@@ -12,6 +12,13 @@ function store(state, emitter) {
     // Actions
     state.events.USERPAGE_SET_TAB = 'USERPAGE_SET_TAB';
     state.events.USERPAGE_EDIT_PROFILE = 'USERPAGE_EDIT_PROFILE';
+
+    // IF NAVIGATED TO LIST PAGE, TRIGGER GET
+    emitter.on('navigate', ()=>{
+        if(state.route === 'users/:username'){
+            emitter.emit('USERS_SET_SELECTED', state.params.username)
+        }
+    })
     
 
     // Events
