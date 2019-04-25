@@ -45,6 +45,16 @@ function store(state, emitter) {
             description: '',
             tags: '',
             links: []
+        },
+        addSectionLinksModal: {
+            displayed: false,
+            url: '',
+            name: '',
+            description: '',
+            tags: [],
+            links: [],
+            selectedList: {},
+            selectedSection: {}
         }
     }
 
@@ -72,6 +82,9 @@ function store(state, emitter) {
     state.events.ADDSECTIONMODAL_LINKSELECT_TOGGLE = 'ADDSECTIONMODAL_LINKSELECT_TOGGLE';
     state.events.ADDSECTIONMODAL_SUBMIT = 'ADDSECTIONMODAL_SUBMIT';
 
+    state.events.ADDSECTIONLINKSMODAL_TOGGLE = 'ADDSECTIONLINKSMODAL_TOGGLE';
+    state.events.ADDSECTIONLINKSMODAL_SECTIONSELECT_TOGGLE = 'ADDSECTIONLINKSMODAL_SECTIONSELECT_TOGGLE';
+    state.events.ADDSECTIONLINKSMODAL_SUBMIT = 'ADDSECTIONLINKSMODAL_SUBMIT';
 
     // Events
     emitter.on('NAVMODAL_TOGGLE', toggleDisplayed('nav'))
@@ -97,6 +110,13 @@ function store(state, emitter) {
     emitter.on('ADDSECTIONMODAL_TOGGLE', toggleDisplayed('addSectionModal'))
     emitter.on('ADDSECTIONMODAL_LINKSELECT_TOGGLE', toggleSectionLinkSelect)
     emitter.on('ADDSECTIONMODAL_SUBMIT', addSectionModal_submit)
+
+    // ADD SECTION LINKS MODAL
+    emitter.on('ADDSECTIONLINKSMODAL_TOGGLE', toggleDisplayed('addSectionLinksModal'))
+    emitter.on('ADDSECTIONLINKSMODAL_LISTSELECT_SET', addSectionLinks_setListSelect)
+    emitter.on('ADDSECTIONLINKSMODAL_LINKSELECT_TOGGLE', addSectionLinks_toggleLinkSelect)
+    emitter.on('ADDSECTIONLINKSMODAL_SECTIONSELECT_TOGGLE', addSectionLinks_toggleSectionSelect)
+    emitter.on('ADDSECTIONLINKSMODAL_SUBMIT', addSectionLinks_submit)
 
     // EDIT PROFILE
     emitter.on('EDITPROFILEMODAL_TOGGLE', toggleDisplayed('editProfileModal'))
@@ -142,6 +162,102 @@ function store(state, emitter) {
 
 
     // Doers
+    function addSectionLinks_submit() {
+        const {
+            name,
+            url,
+            description,
+            tags,
+            links,
+            selectedList,
+            selectedSection
+        } = state.modals.addSectionLinksModal;
+
+        const tagsClean = typeof tags === 'object' ? tags.join() : tags.split(',')
+
+
+        if (!links.length > 0 && !url.length > 0) {
+            alert('you must select some links or add a valid url')
+            return false;
+        }
+
+        if (links.length > 0 && !url.length > 0) {
+            // push those links into the selected section;
+            const query = {
+                query: {
+                    "sections._id": selectedSection._id
+                }
+            }
+            const params = {
+                "$set": {
+                    "sections.$.links": [...selectedSection.links, ...links],
+                }
+            }
+
+            state.api.lists.patch(selectedList._id, params, query)
+                .then(result => {
+                    state.main.selected.lists = result;
+                    emitter.emit('ADDSECTIONLINKSMODAL_TOGGLE')
+                })
+        } else {
+            const linkData = {
+                name: name,
+                url: url,
+                description: description,
+                tags: tagsClean,
+            }
+            // console.log('------ creating link and patching', linkData)
+            // create the new link, then patch
+            state.api.links.create(linkData)
+                .then(result => {
+
+                    let newLinks = [...links,result._id];
+                    console.log(newLinks)
+                    const query = {
+                        query: {
+                            "sections._id": selectedSection._id
+                        }
+                    }
+                    const params = {
+                        "$set": {
+                            "sections.$.links": [...selectedSection.links, ...newLinks],
+                        }
+                    }
+
+                    return state.api.lists.patch(selectedList._id, params, query)
+                })
+                .then(result => {
+                    state.main.selected.lists = result;
+                    emitter.emit('ADDSECTIONLINKSMODAL_TOGGLE')
+                })
+        }
+
+    }
+
+    function addSectionLinks_setListSelect() {
+        state.modals.addSectionLinksModal.selectedList = state.main.selected.lists;
+    }
+
+    function addSectionLinks_toggleSectionSelect(id) {
+        if (Object.keys(state.modals.addSectionLinksModal.selectedSection).length > 0 &&
+            state.modals.addSectionLinksModal.selectedSection._id == id) {
+            state.modals.addSectionLinksModal.selectedSection = {}
+        } else {
+            state.modals.addSectionLinksModal.selectedSection = state.modals.addSectionLinksModal.selectedList.sections.find(section => section._id === id);
+        }
+        emitter.emit('render');
+    }
+
+    function addSectionLinks_toggleLinkSelect(id) {
+        const exists = state.modals.addSectionLinksModal.links.includes(id)
+        if (exists === true) {
+            state.modals.addSectionLinksModal.links = state.modals.addSectionLinksModal.links.filter(item => item !== id);
+        } else {
+            state.modals.addSectionLinksModal.links.push(id)
+        }
+        emitter.emit('render');
+    }
+
     function toggleSectionLinkSelect(id) {
         const exists = state.modals.addSectionModal.links.includes(id)
         if (exists === true) {
@@ -152,9 +268,14 @@ function store(state, emitter) {
         emitter.emit('render');
     }
 
-    function addSectionModal_submit(){
-        const {name, description, tags, links} = state.modals.addSectionModal;
-        
+    function addSectionModal_submit() {
+        const {
+            name,
+            description,
+            tags,
+            links
+        } = state.modals.addSectionModal;
+
         const tagsClean = typeof tags === 'object' ? tags.join() : tags.split(',')
         const data = {
             name: name,
@@ -286,6 +407,7 @@ function store(state, emitter) {
             clearAddListModal()
             clearAddLinkModal();
             clearAddSectionModal();
+            clearAddSectionLinksModal();
             emitter.emit('render')
         }
     }
@@ -424,6 +546,14 @@ function store(state, emitter) {
         state.modals.addSectionModal.description = '';
         state.modals.addSectionModal.tags = [];
         state.modals.addSectionModal.links = [];
+    }
+    function clearAddSectionLinksModal() {
+        state.modals.addSectionLinksModal.name = '';
+        state.modals.addSectionLinksModal.url = '';
+        state.modals.addSectionLinksModal.description = '';
+        state.modals.addSectionLinksModal.tags = [];
+        state.modals.addSectionLinksModal.links = [];
+        state.modals.addSectionLinksModal.selectedSection = {};
     }
 
 

@@ -45,6 +45,7 @@ function view (state, emit) {
   ${AddListModal(state, emit)}
   ${EditFeatureModal(state, emit)}
   ${AddSectionModal(state, emit)}
+  ${AddSectionLinksModal(state, emit)}
 </body>
   `
 }
@@ -107,8 +108,13 @@ function AddSectionBtn(state, emit){
 }
 
 function AddLinkToSectionBtn(state, emit){
+    function handleClick(e){
+        emit('LINKS_FIND', {query:{$sort:{'createdAt':-1}}})
+        emit('ADDSECTIONLINKSMODAL_LISTSELECT_SET')
+        emit('ADDSECTIONLINKSMODAL_TOGGLE')
+    }
     return html`
-    <button class="f7 ml2-ns pa2 ba bw1 b--washed-red bg-washed-red dropshadow" onclick=${() => emit('LISTPAGE_ADD_LINK_TO_SECTION')}>Add Link</button>
+    <button class="f7 ml2-ns pa2 ba bw1 b--washed-red bg-washed-red dropshadow" onclick=${handleClick}>Add Link</button>
     `
 }
 

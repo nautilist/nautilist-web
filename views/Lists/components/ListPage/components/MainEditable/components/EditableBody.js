@@ -59,7 +59,7 @@ class EditableBody extends Component {
         this.state.api.lists.patch(this.state.params._id, params, query)
           .then(result => {
             this.state.main.selected.lists = result;
-            emit('render');
+            this.emit('render');
           })
           .catch(err => {
             alert(err);
