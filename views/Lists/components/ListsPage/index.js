@@ -6,6 +6,7 @@ const Footer = require('../../../../components/Footer')
 const AddFeatureBtn = require('../../../../components/AddFeatureBtn')
 const AddLinkModal = require('../../../../components/AddLinkModal')
 const AddListModal = require('../../../../components/AddListModal')
+const EditFeatureModal = require('../../../../components/EditFeatureModal')
 const LoadMoreBtn = require('../../../../components/LoadMoreBtn');
 
 const ListCards = require('../../../../components/Cards/ListCards');
@@ -29,6 +30,7 @@ function view (state, emit) {
   ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
   ${AddLinkModal(state, emit)}
   ${AddListModal(state, emit)}
+  ${EditFeatureModal(state, emit)}
 </body>
   `
 }

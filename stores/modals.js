@@ -28,6 +28,13 @@ function store(state, emitter) {
         editProfileModal: {
             displayed: false,
             bio:'',
+        },
+        editFeatureModal:{
+            displayed: false,
+            url: '',
+            name: '',
+            description: '',
+            tags: [],
         }
     }
 
@@ -47,6 +54,10 @@ function store(state, emitter) {
     state.events.EDITPROFILEMODAL_SUBMIT = 'EDITPROFILEMODAL_SUBMIT';
     state.events.modal_handle_keyup = "modal_handle_keyup"
 
+    state.events.EDITFEATUREMODAL_TOGGLE = 'EDITFEATUREMODAL_TOGGLE';
+    state.events.EDITFEATUREMODAL_SUBMIT = 'EDITFEATUREMODAL_SUBMIT';
+
+
     // Events
     emitter.on('NAVMODAL_TOGGLE', toggleDisplayed('nav'))
     emitter.on('ADDFEATUREBTNPOPUP_TOGGLE', toggleDisplayed('addFeatureBtnPopup'))
@@ -61,6 +72,9 @@ function store(state, emitter) {
     emitter.on('ADDLINKMODAL_LISTSELECT_TOGGLE', toggleListSelect)
     emitter.on('ADDLINKMODAL_SECTIONSELECT_TOGGLE', toggleSectionSelect)
     emitter.on('ADDLINKMODAL_SUBMIT', addLinkModal_submit)
+
+    // EDIT FEATURE
+    emitter.on('EDITFEATUREMODAL_TOGGLE', toggleDisplayed('editFeatureModal'))
 
     // EDIT PROFILE
     emitter.on('EDITPROFILEMODAL_TOGGLE', toggleDisplayed('editProfileModal'))
