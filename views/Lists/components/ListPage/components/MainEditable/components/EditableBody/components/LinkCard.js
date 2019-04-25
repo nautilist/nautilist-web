@@ -15,8 +15,8 @@ module.exports = function (link, sectionsDetails, section, state, emit){
     const {name, description, url, updatedAt} = feature;
     return html`
         <li data-id="${feature._id}" class="w-100 ba bw1 mt2 mb2 pa3-ns pa2 bg-washed-red dropshadow flex flex-column">
-            <div class="w-100 flex flex-row justify-between">
-                ${editBtn('links', feature.id, state, emit)}
+            <div class="w-100 flex flex-row justify-end">
+                ${editBtn('links', feature._id, state, emit)}
                 ${removeBtn('links', section._id, feature._id, state, emit)}
             </div>
             <div class="flex flex-row-ns justify-between-ns pointer flex-column">

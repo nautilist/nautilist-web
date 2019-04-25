@@ -16,8 +16,8 @@ function view(state, emit){
 function ModalHeader(state, emit){
     return html`
     <header class="flex flex-row items-center justify-between w-100">
-        <h2 class="ma0 pa0 pl2">Add Link</h2>
-        <button class="bn bg-navy pink bw2 pa2 h3 w3 f3 pointer" onclick=${() => emit('ADDLINKMODAL_TOGGLE')}>╳</button>
+        <h2 class="ma0 pa0 pl2">Edit Feature</h2>
+        <button class="bn bg-navy pink bw2 pa2 h3 w3 f3 pointer" onclick=${() => emit('EDITFEATUREMODAL_TOGGLE')}>╳</button>
     </header>
     `
 }
@@ -45,10 +45,11 @@ function EditForm(state, emit){
 }
 
 function inputUrl(state, emit){
+    if(state.modals.editFeatureModal.prop !== 'links') return ''
     return html`
         <fieldset class="${styles.fieldset}">
             <legend class="${styles.legend}">URL</legend>
-            <input value="${state.modals.addLinkModal.url}" 
+            <input value="${state.modals.editFeatureModal.url}" 
                 onkeyup=${handleKeyUp(state,emit)} 
                 name="url" 
                 class="${styles.modalInput}" 
@@ -62,7 +63,7 @@ function inputName(state, emit){
     return html`
         <fieldset class="${styles.fieldset}">
             <legend class="${styles.legend}">Name</legend>
-            <input value="${state.modals.addLinkModal.name}" 
+            <input value="${state.modals.editFeatureModal.name}" 
             onkeyup=${handleKeyUp(state,emit)} 
             name="name" 
             class="${styles.modalInput}" 
@@ -79,7 +80,7 @@ function inputDescription(state, emit){
             <textarea onkeyup=${handleKeyUp(state,emit)} 
             name="description" 
             class="${styles.modalInput}" 
-            placeholder="A description to go with the magic">${state.modals.addLinkModal.description}</textarea>
+            placeholder="A description to go with the magic">${state.modals.editFeatureModal.description}</textarea>
         </fieldset>
     `
 }
@@ -88,7 +89,7 @@ function inputTags(state, emit){
     return html`
         <fieldset class="${styles.fieldset}">
             <legend class="${styles.legend}">Tags</legend>
-            <input value="${state.modals.addLinkModal.tags}" 
+            <input value="${state.modals.editFeatureModal.tags}" 
             onkeyup=${handleKeyUp(state,emit)} 
             name="tags" 
             class="${styles.modalInput}" 
@@ -110,8 +111,8 @@ function inputSubmit(){
 function handleSubmit(state, emit){
     return e => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget)
-        emit('EDITPROFILEMODAL_SUBMIT', formData)
+        // const formData = new FormData(e.currentTarget)
+        emit('EDITFEATUREMODAL_SUBMIT')
     }
 }
 
@@ -119,7 +120,7 @@ function handleKeyUp(state, emit){
     return e => {
         const val = e.target.value;
         const prop = e.target.name;
-        emit('modal_handle_keyup', {modalName:'editProfileModal', prop:prop, val:val})
+        emit('modal_handle_keyup', {modalName:'editFeatureModal', prop:prop, val:val})
     }
 }
 

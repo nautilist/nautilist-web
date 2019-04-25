@@ -27,10 +27,13 @@ function store(state, emitter) {
         },
         editProfileModal: {
             displayed: false,
-            bio:'',
+            bio: '',
         },
-        editFeatureModal:{
+        editFeatureModal: {
             displayed: false,
+            _id: null,
+            featureid: null,
+            prop: null,
             url: '',
             name: '',
             description: '',
@@ -55,6 +58,7 @@ function store(state, emitter) {
     state.events.modal_handle_keyup = "modal_handle_keyup"
 
     state.events.EDITFEATUREMODAL_TOGGLE = 'EDITFEATUREMODAL_TOGGLE';
+    state.events.EDITFEATUREMODAL_SET_VALUES = 'EDITFEATUREMODAL_SET_VALUES';
     state.events.EDITFEATUREMODAL_SUBMIT = 'EDITFEATUREMODAL_SUBMIT';
 
 
@@ -74,13 +78,20 @@ function store(state, emitter) {
     emitter.on('ADDLINKMODAL_SUBMIT', addLinkModal_submit)
 
     // EDIT FEATURE
+    emitter.on('EDITFEATUREMODAL_SET_VALUES', setValues)
     emitter.on('EDITFEATUREMODAL_TOGGLE', toggleDisplayed('editFeatureModal'))
+    emitter.on('EDITFEATUREMODAL_SUBMIT', editFeatureModal_submit)
 
     // EDIT PROFILE
     emitter.on('EDITPROFILEMODAL_TOGGLE', toggleDisplayed('editProfileModal'))
-    emitter.on('EDITPROFILEMODAL_UPDATE_EMOJI', (val)=> {
-        const {_id, username} = state.user;
-        state.api.users.patch(_id, {selectedEmoji: val})
+    emitter.on('EDITPROFILEMODAL_UPDATE_EMOJI', (val) => {
+        const {
+            _id,
+            username
+        } = state.user;
+        state.api.users.patch(_id, {
+                selectedEmoji: val
+            })
             .then(result => {
                 emitter.emit('USERS_SET_SELECTED', username)
             })
@@ -88,10 +99,17 @@ function store(state, emitter) {
                 alert(err);
             });
     })
-    emitter.on('EDITPROFILEMODAL_SUBMIT', ()=> {
-        const {_id, username} = state.user;
-        const {bio} = state.modals.editProfileModal
-        state.api.users.patch(_id, {bio})
+    emitter.on('EDITPROFILEMODAL_SUBMIT', () => {
+        const {
+            _id,
+            username
+        } = state.user;
+        const {
+            bio
+        } = state.modals.editProfileModal
+        state.api.users.patch(_id, {
+                bio
+            })
             .then(result => {
                 emitter.emit('USERS_SET_SELECTED', username)
                 emitter.emit('EDITPROFILEMODAL_TOGGLE')
@@ -105,7 +123,101 @@ function store(state, emitter) {
     emitter.on('modal_handle_keyup', modal_handle_keyup)
 
 
+
+
     // Doers
+
+    function editFeatureModal_submit() {
+        const {
+            prop,
+            url,
+            name,
+            description,
+            tags,
+            _id,
+            featureid,
+        } = state.modals.editFeatureModal
+
+        let payload = {
+            url: url,
+            name: name,
+            description: description,
+            tags: tags.split(','),
+        }
+        if (prop !== 'links') {
+            delete payload.url;
+        }
+
+        if (prop === 'links') {
+            console.log(featureid, payload)
+            state.api.links.patch(featureid, payload, {})
+                .then(result => {
+                    // emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
+                    emitter.emit('EDITFEATUREMODAL_TOGGLE')
+                })
+                .catch(err => {
+                    alert(err);
+                })
+        }
+
+        if (prop === 'sections') {
+            const query = {
+                query: {
+                    "sections._id": featureid
+                }
+            }
+            const params = {
+                "$set": {
+                    "sections.$.name": name,
+                    "sections.$.description": description
+                },
+                "$push": {
+                    "sections.$.tags": tags
+                }
+            }
+
+            state.api.lists.patch(_id, params, query)
+                .then(result => {
+                    // emitter.emit('render');
+                    emitter.emit('EDITFEATUREMODAL_TOGGLE')
+                })
+                .catch(err => {
+                    alert(err);
+                })
+        }
+    }
+
+    function setValues(payload) {
+        const {
+            name,
+            url,
+            description,
+            prop,
+            tags,
+            _id,
+            featureid
+        } = payload;
+        state.modals.editFeatureModal.prop = prop;
+        state.modals.editFeatureModal._id = _id;
+        state.modals.editFeatureModal.featureid = featureid;
+        switch (prop) {
+            case 'sections':
+                state.modals.editFeatureModal.name = name;
+                state.modals.editFeatureModal.description = description;
+                state.modals.editFeatureModal.tags = tags.join();
+                break;
+            case 'links':
+                state.modals.editFeatureModal.name = name;
+                state.modals.editFeatureModal.url = url;
+                state.modals.editFeatureModal.description = description;
+                state.modals.editFeatureModal.tags = tags.join();
+                break;
+            default:
+                break;
+        }
+    }
+
+
     function modal_handle_keyup(payload) {
         const {
             modalName,
@@ -237,23 +349,23 @@ function store(state, emitter) {
     }
 
 
-    function clearAddLinkModal(){
+    function clearAddLinkModal() {
         state.modals.addLinkModal.url = '';
         state.modals.addLinkModal.name = '';
         state.modals.addLinkModal.description = '';
         state.modals.addLinkModal.tags = [];
         state.modals.addLinkModal.selectedList = {};
-        state.modals.addLinkModal.selectedSection=  {};
+        state.modals.addLinkModal.selectedSection = {};
     }
 
-    function clearAddListModal(){
+    function clearAddListModal() {
         state.modals.addListModal.name = '';
         state.modals.addListModal.description = '';
         state.modals.addListModal.tags = [];
         state.modals.addListModal.links = [];
     }
 
-    
+
 
 
 
