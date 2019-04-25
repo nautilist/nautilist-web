@@ -152,7 +152,7 @@ function store(state, emitter) {
             console.log(featureid, payload)
             state.api.links.patch(featureid, payload, {})
                 .then(result => {
-                    // emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
+                    emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
                     emitter.emit('EDITFEATUREMODAL_TOGGLE')
                 })
                 .catch(err => {
@@ -169,16 +169,14 @@ function store(state, emitter) {
             const params = {
                 "$set": {
                     "sections.$.name": name,
-                    "sections.$.description": description
-                },
-                "$push": {
-                    "sections.$.tags": tags
+                    "sections.$.description": description,
+                    "sections.$.tags": tags.split(',')
                 }
             }
 
             state.api.lists.patch(_id, params, query)
                 .then(result => {
-                    // emitter.emit('render');
+                    emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
                     emitter.emit('EDITFEATUREMODAL_TOGGLE')
                 })
                 .catch(err => {

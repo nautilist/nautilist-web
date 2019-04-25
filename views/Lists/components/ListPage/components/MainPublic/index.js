@@ -4,7 +4,7 @@ const moment = require('moment');
 module.exports = view;
 
 
-const mainContainer_styles = `${styles.sectionmw7} mt3`
+const mainContainer_styles = `${styles.sectionmw7} mt3 mb5`
 
 function view(list){
     return html`

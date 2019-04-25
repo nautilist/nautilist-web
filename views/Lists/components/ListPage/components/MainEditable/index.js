@@ -11,7 +11,7 @@ const EditableBody = require('./components/EditableBody');
 module.exports = view;
 
 
-const mainContainer_styles = `${styles.sectionmw7} mt3`
+const mainContainer_styles = `${styles.sectionmw7} mt3 mb5`
 
 function view(list, state, emit){
 
