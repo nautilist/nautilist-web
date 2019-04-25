@@ -38,6 +38,13 @@ function store(state, emitter) {
             name: '',
             description: '',
             tags: [],
+        },
+        addSectionModal: {
+            displayed: false,
+            name: '',
+            description: '',
+            tags: '',
+            links: []
         }
     }
 
@@ -61,6 +68,10 @@ function store(state, emitter) {
     state.events.EDITFEATUREMODAL_SET_VALUES = 'EDITFEATUREMODAL_SET_VALUES';
     state.events.EDITFEATUREMODAL_SUBMIT = 'EDITFEATUREMODAL_SUBMIT';
 
+    state.events.ADDSECTIONMODAL_TOGGLE = 'ADDSECTIONMODAL_TOGGLE';
+    state.events.ADDSECTIONMODAL_LINKSELECT_TOGGLE = 'ADDSECTIONMODAL_LINKSELECT_TOGGLE';
+    state.events.ADDSECTIONMODAL_SUBMIT = 'ADDSECTIONMODAL_SUBMIT';
+
 
     // Events
     emitter.on('NAVMODAL_TOGGLE', toggleDisplayed('nav'))
@@ -81,6 +92,11 @@ function store(state, emitter) {
     emitter.on('EDITFEATUREMODAL_SET_VALUES', setValues)
     emitter.on('EDITFEATUREMODAL_TOGGLE', toggleDisplayed('editFeatureModal'))
     emitter.on('EDITFEATUREMODAL_SUBMIT', editFeatureModal_submit)
+
+    // ADD SECTION
+    emitter.on('ADDSECTIONMODAL_TOGGLE', toggleDisplayed('addSectionModal'))
+    emitter.on('ADDSECTIONMODAL_LINKSELECT_TOGGLE', toggleSectionLinkSelect)
+    emitter.on('ADDSECTIONMODAL_SUBMIT', addSectionModal_submit)
 
     // EDIT PROFILE
     emitter.on('EDITPROFILEMODAL_TOGGLE', toggleDisplayed('editProfileModal'))
@@ -126,6 +142,44 @@ function store(state, emitter) {
 
 
     // Doers
+    function toggleSectionLinkSelect(id) {
+        const exists = state.modals.addSectionModal.links.includes(id)
+        if (exists === true) {
+            state.modals.addSectionModal.links = state.modals.addSectionModal.links.filter(item => item !== id);
+        } else {
+            state.modals.addSectionModal.links.push(id)
+        }
+        emitter.emit('render');
+    }
+
+    function addSectionModal_submit(){
+        const {name, description, tags, links} = state.modals.addSectionModal;
+        
+        const tagsClean = typeof tags === 'object' ? tags.join() : tags.split(',')
+        const data = {
+            name: name,
+            description: description,
+            tags: tagsClean,
+            links: links
+        }
+
+        const params = {
+            "$push": {
+                "sections": data,
+            }
+        }
+
+        state.api.lists.patch(state.params._id, params, {})
+            .then(result => {
+                // emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
+                state.main.selected.lists = result;
+                emitter.emit('ADDSECTIONMODAL_TOGGLE')
+            })
+            .catch(err => {
+                alert(err);
+            })
+
+    }
 
     function editFeatureModal_submit() {
         const {
@@ -174,7 +228,6 @@ function store(state, emitter) {
                 }
             }
 
-            console.log('=======', _id, params, query)
             state.api.lists.patch(state.params._id, params, query)
                 .then(result => {
                     // emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
@@ -232,6 +285,7 @@ function store(state, emitter) {
             state.modals[modalName].displayed = !state.modals[modalName].displayed
             clearAddListModal()
             clearAddLinkModal();
+            clearAddSectionModal();
             emitter.emit('render')
         }
     }
@@ -365,10 +419,12 @@ function store(state, emitter) {
         state.modals.addListModal.links = [];
     }
 
-
-
-
-
+    function clearAddSectionModal() {
+        state.modals.addSectionModal.name = '';
+        state.modals.addSectionModal.description = '';
+        state.modals.addSectionModal.tags = [];
+        state.modals.addSectionModal.links = [];
+    }
 
 
 }

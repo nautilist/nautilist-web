@@ -11,6 +11,9 @@ const EditFeatureModal = require('../../../../components/EditFeatureModal')
 const MainEditable = require('./components/MainEditable')
 const MainPublic = require('./components/MainPublic')
 
+const AddSectionModal = require('./components/AddSectionModal')
+const AddSectionLinksModal = require('./components/AddSectionLinksModal')
+
 var TITLE = 'nautilists - list'
 
 module.exports = view
@@ -41,6 +44,7 @@ function view (state, emit) {
   ${AddLinkModal(state, emit)}
   ${AddListModal(state, emit)}
   ${EditFeatureModal(state, emit)}
+  ${AddSectionModal(state, emit)}
 </body>
   `
 }
@@ -91,8 +95,14 @@ function RemoveListBtn(state, emit){
 }
 
 function AddSectionBtn(state, emit){
+    
+    function handleClick(e){
+        emit('LINKS_FIND', {query:{$sort:{'createdAt':-1}}})
+        emit('ADDSECTIONMODAL_TOGGLE');
+    }
+
     return html`
-    <button class="f7 ml2-ns pa2 ba bw1 b--light-green bg-light-green dropshadow" onclick=${() => emit('LISTPAGE_ADD_SECTION')}>Add Section</button>
+    <button class="f7 ml2-ns pa2 ba bw1 b--light-green bg-light-green dropshadow" onclick=${handleClick}>Add Section</button>
     `
 }
 
