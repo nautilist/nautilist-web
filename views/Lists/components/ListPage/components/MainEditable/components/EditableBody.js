@@ -3,6 +3,7 @@ var html = require('choo/html')
 const Sortable = require('sortablejs');
 const moment = require('moment');
 const styles = require('../../../../../../../styles')
+
 function formatTime(ts) {
   return moment(ts).format('MMMM Do YYYY, h:mm a')
 }
@@ -88,7 +89,7 @@ class EditableBody extends Component {
               tags,
               description
             } = selectedSection
-            emit('EDITFEATUREMODAL_SET_VALUES', {
+            this.emit('EDITFEATUREMODAL_SET_VALUES', {
               _id: selectedList._id,
               featureid,
               name,
@@ -96,39 +97,40 @@ class EditableBody extends Component {
               tags,
               prop
             });
-            emit('EDITFEATUREMODAL_TOGGLE')
+            this.emit('EDITFEATUREMODAL_TOGGLE')
             return
           }).catch(err => {
             alert(err);
             return
           })
-      }
+      } else {
 
-      this.state.api[prop].get(featureid)
-        .then(result => {
-          const {
-            name,
-            url,
-            description,
-            tags,
-            _id
-          } = result;
-          emit('EDITFEATUREMODAL_SET_VALUES', {
-            _id,
-            featureid,
-            name,
-            url,
-            description,
-            tags,
-            prop
-          });
-          emit('EDITFEATUREMODAL_TOGGLE')
-          return
-        })
-        .catch(err => {
-          alert(err);
-          return
-        })
+        this.state.api[prop].get(featureid)
+          .then(result => {
+            const {
+              name,
+              url,
+              description,
+              tags,
+              _id
+            } = result;
+            this.emit('EDITFEATUREMODAL_SET_VALUES', {
+              _id,
+              featureid,
+              name,
+              url,
+              description,
+              tags,
+              prop
+            });
+            this.emit('EDITFEATUREMODAL_TOGGLE')
+            return
+          })
+          .catch(err => {
+            alert(err);
+            return
+          })
+      }
 
     }
 
@@ -211,13 +213,16 @@ class EditableBody extends Component {
   }
 
   createElement(list) {
-    const{sections, sectionsDetails} = list;
-    
+    const {
+      sections,
+      sectionsDetails
+    } = list;
+
     if (!sections) {
       return ''
     }
 
-    const els = html`
+    const els = html `
     <ul class="w-100 pa0 list">
         ${this.SectionCards(sections, sectionsDetails)}
     </ul>
@@ -276,24 +281,20 @@ class EditableBody extends Component {
       const sectionOrder = listPage.sortable.toArray()
 
       // console.log("section order: ", sectionOrder);
-      console.log("nested list order: ", listOrder);
+      // console.log("nested list order: ", listOrder);
 
+      // IF Something is funky, check if your id's are getting clobbered!
       const newSections = sectionOrder.map(sectionid => {
-        console.log(sectionid)
         let data = this.state.main.selected.lists.sections.find(_item => _item._id === sectionid);
         data.links = listOrder.find(_item => _item.id === sectionid).links
         return data;
       })
-
-      console.log('--------', newSections)
-
 
       // TODO: make a less precarious way to patch many
       // for now fully overwrite sections
       const data = {
         sections: newSections
       }
-
 
       const {
         _id

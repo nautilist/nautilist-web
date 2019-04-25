@@ -174,9 +174,11 @@ function store(state, emitter) {
                 }
             }
 
-            state.api.lists.patch(_id, params, query)
+            console.log('=======', _id, params, query)
+            state.api.lists.patch(state.params._id, params, query)
                 .then(result => {
-                    emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
+                    // emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
+                    state.main.selected.lists = result;
                     emitter.emit('EDITFEATUREMODAL_TOGGLE')
                 })
                 .catch(err => {
