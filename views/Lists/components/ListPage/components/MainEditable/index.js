@@ -14,11 +14,10 @@ module.exports = view;
 const mainContainer_styles = `${styles.sectionmw7} mt3 mb5`
 
 function view(list, state, emit){
-
     return html`
     <section class="${mainContainer_styles}">
-        ${EditableHeader(list)}
-        ${EditableBody(list, state, emit)}
+        ${EditableHeader(list, state, emit)}
+        ${state.cache(EditableBody, 'EditableBody', state, emit).render(list)}
     </section>
     `
 }

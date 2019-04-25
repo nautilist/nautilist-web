@@ -69,14 +69,13 @@ function store (state, emitter) {
         }
 
         patch(id, data, params){
-            state.api[this.db].patch(id, data, params)
+            const output = state.api[this.db].patch(id, data, params)
                 .then(result => {
-                    // state.main[this.db].push(result);
-                    // 
                     return result;
                 }).catch(err => {
                     alert(err);
                 })
+            return Promise.resolve(output);
         }
 
         remove(_id){
@@ -175,7 +174,14 @@ state.main = {
                 emitter.emit('render')
             })
     })
-    emitter.on('LISTS_PATCH', listsApi.patch)
+    emitter.on('LISTS_PATCH', (_id, data, params) => {
+        listsApi.patch(_id, data, params)
+            .then(result => {
+                console.log('LISTS_PATCH - patching!', result.sections[0].links)
+                state.main.selected.lists = result;
+                emitter.emit('render')
+            })
+    })
     emitter.on('LISTS_CREATE', (payload) => {
         listsApi.create(payload)
             .then(result => {
