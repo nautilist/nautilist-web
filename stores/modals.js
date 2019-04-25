@@ -461,7 +461,8 @@ function store(state, emitter) {
                 toggleDisplayed('addListModal').call()
                 toggleDisplayed('addFeatureBtnPopup').call()
                 clearAddListModal()
-                emitter.emit('LISTS_FIND')
+                // emitter.emit('LISTS_FIND')
+                emitter.emit('pushState', `/lists/${result._id}`)
             })
             .catch(err => {
                 alert(err);
@@ -503,7 +504,8 @@ function store(state, emitter) {
                     toggleDisplayed('addLinkModal').call()
                     toggleDisplayed('addFeatureBtnPopup').call()
                     clearAddLinkModal();
-                    emitter.emit('LISTS_FIND')
+                    // emitter.emit('LISTS_FIND')
+                    emitter.emit('pushState', `/lists/${result._id}`)
                 })
                 .catch(err => {
                     alert(err);
