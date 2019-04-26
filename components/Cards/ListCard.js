@@ -33,7 +33,7 @@ function ListCard(list){
         <header class="w-100 h2  br--top" style="background-color:${colors[selectedColor]};"></header>
         <div class="hide-child">
             <section class="pa2">
-              <h3 class="ma0 overflow-y-scroll" style="max-height:4rem">${name}</h3>
+              <h3 class="ma0 overflow-y-scroll " style="max-height:4rem">${name}</h3>
               <small class="ma0">by <a class="link black underline" href="/users/${list.ownerDetails.username}">${checkOwner(list)}</a> ${showCollaborators(list)}</small>
             </section>
             <p class="ma0 pa2  f7 overflow-y-scroll" style="max-height:4rem">${description}</p>

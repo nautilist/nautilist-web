@@ -31,7 +31,7 @@ function view (state, emit) {
   <body class="${styles.body}" onload=${() => init()}>
   ${NavbarTop(state, emit)}
   <main class="${styles.main}">
-      <section class="w-100 flex flex-column items-center mt4">
+      <section class="w-100 flex flex-column items-center mt4 pa2 pa0-ns">
         ${goBackBtn(state, emit)}
         ${PublicToolBar(state, emit)}
         ${EditableState(state, emit)}
@@ -146,14 +146,14 @@ function EditingToolBar(state, emit){
         return ''
     }
     return html`
-        <section class="${styles.sectionmw7} flex flex-row-ns mt4 items-center justify-between-ns flex-wrap-reverse">
-            <div>
+        <section class="${styles.sectionmw7} flex flex-row-ns mt4 items-center-ns justify-between-ns flex-column">
+            <div class="flex flex-row-ns flex-column">
                 ${ToggleEditableBtn(state, emit)}
                 ${AddSectionBtn(state, emit)}
                 ${AddLinkToSectionBtn(state, emit)}
                 ${AddCollaboratorBtn(state, emit)} 
             </div>
-            <div>
+            <div class="flex flex-row-ns flex-column">
                 ${RemoveListBtn(state, emit)}
             </div>
         </section>

@@ -167,7 +167,7 @@ class EditableBody extends Component {
             <div class="flex flex-row-ns justify-between-ns pointer flex-column">
             <div class="w-75-ns w-100">
             <small class="f8 ma0 pa0">${url}</small>
-            <h2 class="pa0 ma0 f4 f5-ns">${name}</h2>
+            <h2 class="pa0 ma0 f6 f4-ns">${name}</h2>
             <p class="pa0 mt2 f7 f6-ns">${description}</p>
             </div>
             <div class="w-25-ns w-100 tr">
@@ -195,12 +195,12 @@ class EditableBody extends Component {
 
     return html `
     <li class="w-100" data-id=${section._id}>
-    <fieldset  class="mt3 mb3 bg-white b--light-green ba bw1 dropshadow pa3">
+    <fieldset  class="mt3 mb3 bg-white b--light-green ba bw1 dropshadow pa2">
      <legend class="${styles.legend} ma0 pa0 f5 f4-ns">${name} ${this.EditBtn('sections', section._id)}
      ${this.RemoveBtn('sections', selectedList._id, section._id)}</legend>
     
      <p class="ma0 pa0 f7 f6-ns">${description}</p>
-     <ul class="list pl3 pr3 nested-sortable" data-sectionid=${section._id}>
+     <ul class="list pl3-ns pr3-ns pa0 nested-sortable" data-sectionid=${section._id}>
         ${linksEl}
      </ul>
      </fieldset>

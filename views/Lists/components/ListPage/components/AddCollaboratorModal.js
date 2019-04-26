@@ -72,7 +72,7 @@ class AddCollaboratorModal extends Component {
   }
 
   selectAndAdd(e) {
-    console.log('clicked!');
+    // console.log('clicked!');
     const userId = e.currentTarget.dataset.userid;
     const listId = this.state.main.selected.lists._id;
     const params = {
@@ -131,7 +131,7 @@ class AddCollaboratorModal extends Component {
         }
       }
 
-      console.log(_id, rmId)
+      // console.log(_id, rmId)
 
       let del = confirm("do you really want to remove this collaborator?");
       if (del === true) {

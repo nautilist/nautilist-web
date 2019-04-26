@@ -222,7 +222,7 @@ function store(state, emitter) {
                 .then(result => {
 
                     let newLinks = [...links,result._id];
-                    console.log(newLinks)
+                    // console.log(newLinks)
                     const query = {
                         query: {
                             "sections._id": selectedSection._id
@@ -334,7 +334,7 @@ function store(state, emitter) {
         }
 
         if (prop === 'links') {
-            console.log(featureid, payload)
+            // console.log(featureid, payload)
             state.api.links.patch(featureid, payload, {})
                 .then(result => {
                     emitter.emit('pushState', `/lists/${state.main.selected.lists._id}`);
@@ -429,7 +429,7 @@ function store(state, emitter) {
         } else {
             state.modals.addListModal.links.push(id)
         }
-        console.log(state.modals.addListModal.links)
+        // console.log(state.modals.addListModal.links)
         emitter.emit('render');
     }
 

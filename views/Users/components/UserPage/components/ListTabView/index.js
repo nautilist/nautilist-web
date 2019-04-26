@@ -52,7 +52,7 @@ function ListCard(list, state, emit){
     <li onclick=${navigateTo}
         class="w-100 ba bw1 mt2 mb2 pa3-ns pa2 bg-washed-green dropshadow flex flex-column flex-row-ns justify-between-ns pointer">
         <div class="w-75-ns w-100">
-        <h2 class="pa0 ma0 f4 f5-ns">${name}</h2>
+        <h2 class="pa0 ma0 f5 f4-ns">${name}</h2>
         <p class="pa0 ma0 f7 f6-ns">${description}</p>
         </div>
         <div class="w-25-ns w-100 tr">

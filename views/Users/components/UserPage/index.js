@@ -25,7 +25,7 @@ function view (state, emit) {
   return html`
   <body class="${styles.body}" onload=${() => emit('USERS_SET_SELECTED', username)}>
   ${NavbarTop(state, emit)}
-  <main class="${styles.main} flex flex-column items-center">
+  <main class="${styles.main} flex flex-column items-center pa2 pa0-ns">
       ${Header(state,emit)}
       ${UserTabSelect(state, emit)}
       ${MainView(state, emit)}
@@ -112,11 +112,11 @@ function UserTabSelect(state, emit){
     return html`
         <section class="${styles.sectionmw7} pa0 ma0 flex flex-column flex-row-ns mt4 justify-between-ns justify-start flex-wrap">
             <ul class="list pa0 pl0 flex flex-row ma0">
-                <li class="pa0 mr2"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('lists')}" onclick=${switchTab('lists')}>lists</button></li>
-                <li class="pa0 mr2"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('links')}" onclick=${switchTab('links')}>links</button></li>
+                <li class="pa0 mr2"><button class="f7 f6-ns pa2 dropshadow ba bw1 b--black ${highlightTab('lists')}" onclick=${switchTab('lists')}>lists</button></li>
+                <li class="pa0 mr2"><button class="f7 f6-ns pa2 dropshadow ba bw1 b--black ${highlightTab('links')}" onclick=${switchTab('links')}>links</button></li>
             </ul>
             <ul class="list pa0 pl0 flex flex-row ma0">
-            <li class="pa0 ml2-ns ml0 mt2 mt0-ns"><button class="pa2 dropshadow ba bw1 b--black ${highlightTab('listsFollowing')}" onclick=${switchTab('listsFollowing')}>lists I follow</button></li>
+            <li class="pa0 ml2-ns ml0 mt2 mt0-ns"><button class="f7 f6-ns pa2 dropshadow ba bw1 b--black ${highlightTab('listsFollowing')}" onclick=${switchTab('listsFollowing')}>lists I follow</button></li>
             </ul>
         </section>
     `
