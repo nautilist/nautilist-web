@@ -8,6 +8,7 @@
     "inspect": "bankai inspect index.js",
     "start": "bankai start index.js",
     "test": "standard && npm run test-deps",
+    "deploy-ghpages": "npm run build; git add .; git commit -am 'added latest build'; git push origin `git subtree split --prefix dist master`:gh-pages --force",
     "test-deps": "dependency-check . && dependency-check . --extra --no-dev -i tachyons"
   },
   "dependencies": {
