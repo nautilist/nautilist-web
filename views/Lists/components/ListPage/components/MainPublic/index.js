@@ -96,10 +96,10 @@ function LinkCard(link, sectionsDetails){
     const feature = sectionsDetails.find(item => item._id === link);
     const {name, description, url, updatedAt} = feature;
     return html`
-        <li class="w-100 ba bw1 mt2 mb2 pa3-ns pa2 bg-washed-red dropshadow flex flex-column flex-row-ns justify-between-ns pointer">
+        <li class="w-100 ba bw1 mt2 mb2 pa3-ns pa2 bg-washed-red dropshadow flex flex-column flex-row-ns justify-between-ns">
             <div class="w-75-ns w-100">
-            <small class="f8 ma0 pa0">${url}</small>
-            <h2 class="pa0 ma0 f6 f4-ns">${name}</h2>
+            <small class="f8 ma0 pa0"><a class="${styles.aTag} dim" href="${url}" target="_blank">${url}</a></small>
+            <h2 class="pa0 ma0 f6 f4-ns"><a class="${styles.aTag} dim" href="${url}" target="_blank">${name}</a></h2>
             <p class="pa0 mt2 f7 f6-ns">${description}</p>
             </div>
             <div class="w-25-ns w-100 tr">

@@ -166,8 +166,8 @@ class EditableBody extends Component {
             </div>
             <div class="flex flex-row-ns justify-between-ns pointer flex-column">
             <div class="w-75-ns w-100">
-            <small class="f8 ma0 pa0">${url}</small>
-            <h2 class="pa0 ma0 f6 f4-ns">${name}</h2>
+            <small class="f8 ma0 pa0"><a class="${styles.aTag}" href="${url}" target="_blank">${url}</a></small>
+            <h2 class="pa0 ma0 f6 f4-ns"><a class="${styles.aTag}" href="${url}" target="_blank">${name}</a></h2>
             <p class="pa0 mt2 f7 f6-ns">${description}</p>
             </div>
             <div class="w-25-ns w-100 tr">
