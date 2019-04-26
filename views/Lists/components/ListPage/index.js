@@ -13,6 +13,7 @@ const MainPublic = require('./components/MainPublic')
 
 const AddSectionModal = require('./components/AddSectionModal')
 const AddSectionLinksModal = require('./components/AddSectionLinksModal')
+const AddCollaboratorModal = require('./components/AddCollaboratorModal')
 
 var TITLE = 'nautilists - list'
 
@@ -46,6 +47,7 @@ function view (state, emit) {
   ${EditFeatureModal(state, emit)}
   ${AddSectionModal(state, emit)}
   ${AddSectionLinksModal(state, emit)}
+  ${state.cache(AddCollaboratorModal, 'AddCollaboratorModal', state, emit).render()}
 </body>
   `
 }
@@ -119,8 +121,13 @@ function AddLinkToSectionBtn(state, emit){
 }
 
 function AddCollaboratorBtn(state, emit){
+
+    function handleClick(e){
+        emit('ADDCOLLABORATORMODAL_TOGGLE');
+    }
+
     return html`
-    <button class="f7 ml2-ns pa2 ba bw1 b--dark-blue bg-dark-blue pink dropshadow" onclick=${() => emit('LISTPAGE_ADD_COLLABORATOR')}>Add Collaborator</button>
+    <button class="f7 ml2-ns pa2 ba bw1 b--dark-blue bg-dark-blue pink dropshadow" onclick=${handleClick}>Add Collaborator</button>
     `
 }
 

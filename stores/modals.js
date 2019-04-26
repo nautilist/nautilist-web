@@ -55,6 +55,11 @@ function store(state, emitter) {
             links: [],
             selectedList: {},
             selectedSection: {}
+        },
+        addCollaboratorModal:{
+            displayed: false,
+            searchTerm:'',
+            searchResults:[],
         }
     }
 
@@ -85,6 +90,9 @@ function store(state, emitter) {
     state.events.ADDSECTIONLINKSMODAL_TOGGLE = 'ADDSECTIONLINKSMODAL_TOGGLE';
     state.events.ADDSECTIONLINKSMODAL_SECTIONSELECT_TOGGLE = 'ADDSECTIONLINKSMODAL_SECTIONSELECT_TOGGLE';
     state.events.ADDSECTIONLINKSMODAL_SUBMIT = 'ADDSECTIONLINKSMODAL_SUBMIT';
+
+
+    state.events.ADDCOLLABORATORMODAL_TOGGLE = 'ADDCOLLABORATORMODAL_TOGGLE';
 
     // Events
     emitter.on('NAVMODAL_TOGGLE', toggleDisplayed('nav'))
@@ -117,6 +125,8 @@ function store(state, emitter) {
     emitter.on('ADDSECTIONLINKSMODAL_LINKSELECT_TOGGLE', addSectionLinks_toggleLinkSelect)
     emitter.on('ADDSECTIONLINKSMODAL_SECTIONSELECT_TOGGLE', addSectionLinks_toggleSectionSelect)
     emitter.on('ADDSECTIONLINKSMODAL_SUBMIT', addSectionLinks_submit)
+
+    emitter.on('ADDCOLLABORATORMODAL_TOGGLE', toggleDisplayed('addCollaboratorModal'))
 
     // EDIT PROFILE
     emitter.on('EDITPROFILEMODAL_TOGGLE', toggleDisplayed('editProfileModal'))

@@ -22,7 +22,7 @@ function showCollaborators(collaboratorDetails){
 
     const els = collaboratorDetails.map(collaborator => {
         return html`
-            <a class="${styles.aTag}" href="/users/${collaborator.username}">${collaborator.username}</a>
+            <a class="${styles.aTag} mr2" href="/users/${collaborator.username}">· ${collaborator.username}</a>
         `
     })
     
