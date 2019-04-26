@@ -16,27 +16,25 @@ var TITLE = `nautilists - user`
 
 module.exports = view
 
-function view (state, emit) {
+function view(state, emit) {
     
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
-
-  const {username} = state.params
   
   return html`
-  <body class="${styles.body}" onload=${() => emit('USERS_SET_SELECTED', username)}>
-  ${NavbarTop(state, emit)}
-  <main class="${styles.main} flex flex-column items-center pa2 pa0-ns">
-      ${Header(state,emit)}
-      ${UserTabSelect(state, emit)}
-      ${MainView(state, emit)}
-  </main>
-  ${Footer(state, emit)}
-  ${MobileNavMenuModal(state, emit)}
-  ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
-  ${AddLinkModal(state, emit)}
-  ${AddListModal(state, emit)}
-  ${EditProfileModal(state, emit)}
-</body>
+    <body class="${styles.body}" onload=${() => emit('USERS_SET_SELECTED', state.params.username)}>
+    ${NavbarTop(state, emit)}
+    <main class="${styles.main} flex flex-column items-center pa2">
+        ${Header(state,emit)}
+        ${UserTabSelect(state, emit)}
+        ${MainView(state, emit)}
+    </main>
+    ${Footer(state, emit)}
+    ${MobileNavMenuModal(state, emit)}
+    ${state.cache(AddFeatureBtn, 'AddFeatureBtn', state, emit).render()}
+    ${AddLinkModal(state, emit)}
+    ${AddListModal(state, emit)}
+    ${EditProfileModal(state, emit)}
+    </body>
   `
 }
 
@@ -51,11 +49,11 @@ function Header(state, emit){
     return html`
         <header class="${styles.sectionmw7} h-auto ba bw1 dropshadow mt4 pa2">
             <p class="pa0 ma0 w-100 tr">${EditProfileBtn(state, emit)}</p>    
-            <div class="w-100 flex flex-column flex-row items-center">
+            <div class="w-100 flex flex-column flex-row items-center pa2">
                 <img class="ma0 pa0 dib h3 dropshadow ba bw1" src="/assets/${avatar}">
                 <h1 class="ma0 pa0 pl3 f3 f2-ns">${username}</h1>
             </div>
-            <p>${bio}</p>
+            <p class="pa2">${bio}</p>
         </header>
     `
 }
@@ -67,15 +65,12 @@ function MainView(state, emit){
     switch(userPage.selectedTab){
         case('lists'):
             return ListTabView(state, emit)
-            break;
         case('links'):
             return LinkTabView(state, emit)
-            break;
         case('listsFollowing'):
             return ListFollowingTabView(state, emit)
-            break;
         default:
-            break;
+            return ''
 
     }
 }
@@ -93,13 +88,10 @@ function UserTabSelect(state, emit){
             switch(tabName){
                 case 'lists':
                     return 'bg-light-green navy'
-                    break
                 case 'links':
                     return 'bg-light-pink navy'
-                    break
                 case 'listsFollowing':
                     return 'bg-light-blue navy'
-                    break
                 default:
                     return 'bg-pink navy'
             }

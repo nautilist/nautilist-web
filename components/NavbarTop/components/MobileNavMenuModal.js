@@ -1,5 +1,4 @@
 const html = require('choo/html');
-const Modal = require('../../Modal');
 const styles = require('../../../styles')
 const AuthBtn = require('./AuthBtn')
 const SearchInput = require('./SearchInput')

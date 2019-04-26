@@ -196,7 +196,7 @@ state.main = {
     emitter.on('USERS_SET_SELECTED', (username) => {
         let userid;
         let query;
-
+        console.log('set - user selected!')
         state.api.users.find({query:{username: username}})
             .then(result => {
                 userid = result.data[0]._id;
