@@ -22,7 +22,7 @@ function NavbarTop(state, emit){
                     ${LogoMain()}
                 </li>
                 <li class="${styles_searchContainer} mw6">
-                    ${SearchInput()}
+                    ${SearchInput(state, emit)}
                 </li>
                 <li class="pl3">
                     ${BrowseBtn(state, emit)}

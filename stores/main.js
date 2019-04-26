@@ -149,6 +149,7 @@ state.main = {
 
   // BROWSE
   state.events.BROWSE_FIND = "BROWSE_FIND";
+  state.events.NAVSEARCH_FIND = "NAVSEARCH_FIND";
   
 
 //   state.api.socket.on('get', message => console.log('getting this: ',message))
@@ -156,12 +157,6 @@ state.main = {
 //       if(error) console.log('Found message', message);
 //     console.log('Found message', message);
 //   });
-
-//   state.api.lists.on(
-//       'created', 
-//        result => {console.log('New list created', message)}
-//   );
-
   
 
   emitter.on('DOMContentLoaded', function () {
@@ -236,6 +231,26 @@ state.main = {
         emitter.emit('LINKS_FIND', query)
         emitter.emit('USERS_FIND', query)
     })
+
+    emitter.on('NAVSEARCH_FIND', () => {
+        const {searchTerm} = state.search
+        const query = {
+            query: {
+                $or: [
+                    { name: { $regex: searchTerm, "$options": "i" } },
+                    { description: { $regex: searchTerm, "$options": "i" } },
+                    { url: { $regex: searchTerm, "$options": "i" } },
+                    { username: { $regex: searchTerm, "$options": "i" } },
+                  ]
+            }
+          }
+        emitter.emit('LISTS_FIND', query)
+        emitter.emit('LINKS_FIND', query)
+        emitter.emit('USERS_FIND', query)
+        emitter.emit('pushState', '/search')
+        
+    })
+
   })
 
 

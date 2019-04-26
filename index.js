@@ -17,6 +17,7 @@ app.use(require('./stores/user'))
 app.use(require('./stores/userPage'))
 app.use(require('./stores/modals'))
 app.use(require('./stores/listPage'))
+app.use(require('./stores/search'))
 
 app.route('/', require('./views/Home'))
 app.route('/login', require('./views/Auth'))
@@ -27,6 +28,7 @@ app.route('/signup', require('./views/Auth'))
 
 
 app.route('/browse', require('./views/Browse'))
+app.route('/search', require('./views/Search'))
 
 app.route('/users', require('./views/Users'))
 app.route('/users/:username', require('./views/Users'))
