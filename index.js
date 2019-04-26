@@ -44,5 +44,4 @@ app.route('/*', require('./views/404'))
 if (typeof window !== 'undefined') {
   document.body.appendChild(app.start())
 }
-
 module.exports = app
