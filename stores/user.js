@@ -168,7 +168,7 @@ function store(state, emitter) {
     state.events.USER_SENDVERIFICATIONTOKEN = 'USER_SENDVERIFICATIONTOKEN';
 
     // Events
-    emitter.on("DOMContentLoaded", () => {
+    // emitter.on("DOMContentLoaded", () => {
         // when the DOM loads
         auth.checkLogin();
         emitter.on(state.events.USER_SIGNUP, auth.signup)
@@ -177,7 +177,7 @@ function store(state, emitter) {
         emitter.on(state.events.USER_RESETPASSWORD, auth.resetPassword)
         emitter.on(state.events.USER_SENDRESETPASSWORD, auth.sendResetPassword)
         emitter.on(state.events.USER_SENDVERIFICATIONTOKEN, auth.sendVerificationToken)
-    })
+    // })
 
 
     // Doers

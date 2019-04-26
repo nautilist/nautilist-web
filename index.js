@@ -43,7 +43,6 @@ app.route('/*', require('./views/404'))
 
 if (typeof window !== 'undefined') {
   document.body.appendChild(app.start())
-  app.mount('body')
 }
 
-module.exports = app.mount('body')
+module.exports = app

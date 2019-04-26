@@ -159,7 +159,7 @@ state.main = {
 //   });
   
 
-  emitter.on('DOMContentLoaded', function () {
+//   emitter.on('DOMContentLoaded', function () {
     emitter.on('LISTS_FIND', listsApi.find)
     emitter.on('LISTS_FIND_MORE', listsApi.findMore);
     emitter.on('LISTS_GET', (query) => {
@@ -218,7 +218,7 @@ state.main = {
                 state.main.selected.user.links = result;
                 emitter.emit('render');
             }).catch(err => {
-                console.log(err);
+                console(err);
                 return err;
             })
         
@@ -251,7 +251,7 @@ state.main = {
         
     })
 
-  })
+//   })
 
 
   function setQueryUserid(userid){
@@ -290,60 +290,3 @@ state.main = {
 
   
 }
-
-
-/** 
-
-let findFollowers = {
-      query:{ 
-        "followers": {
-          "$in": []
-        }
-      }
-    }
-
-    let findUserFollowers = {
-      query:{ 
-        "following": {
-          "$in": []
-        }
-      }
-    }
-
-    findFollowers.query.followers.$in = [state.selectedUser.profile._id];
-        return state.api.lists.find(findFollowers)
-    
-
-        state.api.users.find(findByUsername)
-      .then(result => {
-        state.selectedUser.profile = result.data[0];
-        queryParams.query.$or[0].owner = state.selectedUser.profile._id;
-        queryParams.query.$or[1].collaborators.$in = [state.selectedUser.profile._id];
-        return state.api.links.find(queryParams)
-      })
-      .then(result => {
-        state.selectedUser.links = result.data;
-        return state.api.lists.find(queryParams)
-      })
-      .then(result => {
-        state.selectedUser.lists = result.data;
-        findFollowers.query.followers.$in = [state.selectedUser.profile._id];
-        return state.api.lists.find(findFollowers)
-      })
-      .then(result => {
-        state.selectedUser.listsFollowing = result.data;
-        findUserFollowers.query.following.$in = [state.selectedUser.profile._id];
-        return state.api.users.find(findUserFollowers)
-      })
-      .then(result => {
-        state.selectedUser.followers = result.data;
-        emitter.emit('render');
-      })
-      .catch(err =>{
-        alert(err);
-      })
-
-
-
-
- */
