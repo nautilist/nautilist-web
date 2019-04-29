@@ -194,6 +194,11 @@ function store(state, emitter) {
             return false;
         }
 
+        if(!Object.keys(selectedList).length > 0 || !Object.keys(selectedSection).length > 0){
+            alert("Sorry! you must select a section to submit your link!")
+            return;
+        }
+
         if (links.length > 0 && !url.length > 0) {
             // push those links into the selected section;
             const query = {
@@ -506,6 +511,7 @@ function store(state, emitter) {
             selectedList,
             selectedSection
         } = state.modals.addLinkModal;
+
         if (Object.keys(selectedList).length > 0 &&
             Object.keys(selectedSection).length > 0) {
 
