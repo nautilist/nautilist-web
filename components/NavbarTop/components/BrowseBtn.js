@@ -7,6 +7,7 @@ function BrowseBtn(state, emit){
    
     function handleClick(e){
         emit('BROWSE_FIND');
+        emit('NAVMODAL_CLOSE');
         emit('pushState', '/browse')
     }
     return html`

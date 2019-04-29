@@ -65,6 +65,8 @@ function store(state, emitter) {
 
     // Actions
     state.events.NAVMODAL_TOGGLE = 'NAVMODAL_TOGGLE';
+    state.events.NAVMODAL_CLOSE = 'NAVMODAL_CLOSE';
+
     state.events.ADDFEATUREBTNPOPUP_TOGGLE = 'ADDFEATUREBTNPOPUP_TOGGLE';
     state.events.ADDLISTMODAL_TOGGLE = 'ADDLISTMODAL_TOGGLE';
     state.events.ADDLISTMODAL_LINKSELECT_TOGGLE = 'ADDLISTMODAL_LINKSELECT_TOGGLE';
@@ -96,6 +98,7 @@ function store(state, emitter) {
 
     // Events
     emitter.on('NAVMODAL_TOGGLE', toggleDisplayed('nav'))
+    emitter.on('NAVMODAL_CLOSE', closeModal('nav'))
     emitter.on('ADDFEATUREBTNPOPUP_TOGGLE', toggleDisplayed('addFeatureBtnPopup'))
 
     // LIST MODAL
@@ -414,6 +417,17 @@ function store(state, emitter) {
     function toggleDisplayed(modalName) {
         return e => {
             state.modals[modalName].displayed = !state.modals[modalName].displayed
+            clearAddListModal()
+            clearAddLinkModal();
+            clearAddSectionModal();
+            clearAddSectionLinksModal();
+            emitter.emit('render')
+        }
+    }
+
+    function closeModal(modalName){
+        return e => {
+            state.modals[modalName].displayed = false
             clearAddListModal()
             clearAddLinkModal();
             clearAddSectionModal();

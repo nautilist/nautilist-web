@@ -15,8 +15,13 @@ function AuthBtn(state, emit){
 }
 
 function logoutBtn(state, emit){
+    function handleClick(e){
+        emit('NAVMODAL_CLOSE');
+        emit('USER_LOGOUT')
+    }
+
     return html`
-        <button class="pointer bn bg-transparent" onclick=${()=> emit('USER_LOGOUT')}>log out</button>
+        <button class="pointer bn bg-transparent" onclick=${handleClick}>log out</button>
     `
 }
 
@@ -25,6 +30,7 @@ function isAuthd(state, emit){
     const {username} = user;
 
     function navigateTo(e){
+        emit('NAVMODAL_CLOSE');
         emit('USERS_SET_SELECTED', username)
         emit('pushState', `/users/${username}`)
     }
@@ -37,9 +43,14 @@ function isAuthd(state, emit){
 }
 
 function notAuthd(state, emit){
+
+    function handleClose(e){
+        emit('NAVMODAL_CLOSE');
+    }
+
     return html`
     <div>
-        <p><a class="${styles.aTag}" href="/login">login</a> · <a class="${styles.aTag}" href="/signup">sign up</a></p>
+        <p onclick=${handleClose}><a class="${styles.aTag}" href="/login">login</a> · <a class="${styles.aTag}" href="/signup">sign up</a></p>
     </div>
     `
 }

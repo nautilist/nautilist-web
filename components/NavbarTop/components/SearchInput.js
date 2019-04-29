@@ -11,6 +11,7 @@ function SearchInput(state, emit){
     function handleSubmit(e){
         e.preventDefault();
         console.log('submit search')
+        emit('NAVMODAL_CLOSE');
         const searchTerm = new FormData(e.currentTarget).get('search')
         emit('NAVSEARCH_FIND')
     }
