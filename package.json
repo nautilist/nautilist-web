@@ -20,7 +20,7 @@
     "@feathersjs/socketio-client": "^1.2.1",
     "choo": "^6.13.3",
     "choo-service-worker": "^2.4.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "sheetify": "^7.3.3",
     "slugify": "^1.3.4",
     "socket.io-client": "^2.2.0",
